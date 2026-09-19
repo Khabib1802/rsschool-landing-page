@@ -2,3 +2,21 @@
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 0 auto;
+}
+
+.footer {
+  flex-shrink: 0;
+}
