@@ -1,0 +1,19 @@
+.header {
+  position: relative;
+  border-bottom: var(--border-subtle);
+  background-color: var(--color-surface);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding-block: var(--space-16);
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
