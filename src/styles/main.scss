@@ -18,6 +18,11 @@
 @use "components/social-links";
 @use "components/button";
 @use "components/plant-card";
+@use "components/space-card";
 
 @use "sections/hero";
 @use "sections/featured-plants";
+@use "sections/shop-by-space";
+
+@use "components/characteristic-indicator";
+@use "sections/characteristics";

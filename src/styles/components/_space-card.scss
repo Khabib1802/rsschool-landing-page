@@ -1,0 +1,44 @@
+.space-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+}
+
+.space-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.space-card:hover .space-card__image,
+.space-card:focus-within .space-card__image {
+  transform: scale(1.04);
+}
+
+.space-card__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-24);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent 60%);
+}
+
+.space-card__name {
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: var(--font-size-h3);
+}
+
+.space-card__descriptor {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--font-size-small);
+}
+
+.space-card__link {
+  position: absolute;
+  inset: 0;
+}

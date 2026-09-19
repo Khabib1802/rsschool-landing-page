@@ -1,0 +1,42 @@
+.characteristic-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-12);
+  text-align: center;
+}
+
+.characteristic-indicator__icon {
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-primary);
+}
+
+.characteristic-indicator__label {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.characteristic-indicator__dots {
+  display: flex;
+  gap: var(--space-8);
+}
+
+.characteristic-indicator__dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-primary);
+}
+
+.characteristic-indicator__dot--filled {
+  background-color: var(--color-primary);
+}
+
+.characteristic-indicator__value {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
