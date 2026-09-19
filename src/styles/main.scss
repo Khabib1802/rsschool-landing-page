@@ -21,6 +21,7 @@
 @use "components/space-card";
 @use "components/characteristic-indicator";
 @use "components/note-card";
+@use "components/category-nav";
 
 @use "sections/hero";
 @use "sections/featured-plants";
@@ -28,3 +29,5 @@
 @use "sections/characteristics";
 @use "sections/brand-story";
 @use "sections/plant-notes";
+@use "sections/final-cta";
+@use "sections/catalog";

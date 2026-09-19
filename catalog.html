@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MOSS — Find the right plant for your space</title>
+  <title>MOSS — Catalog</title>
 
   <style>
     html {
@@ -42,7 +42,7 @@
     <div class="header__inner container">
       <a href="/" class="logo">MOSS</a>
 
-      <nav class="header__nav" id="primary-nav" aria-label="Main navigation">
+      <nav class="header__nav" id="primary-nav" aria-label="Основная навигация">
         <ul class="nav-list">
           <li><a href="/#shop" class="nav-list__link">Shop</a></li>
           <li><a href="/#spaces" class="nav-list__link">Spaces</a></li>
@@ -51,7 +51,7 @@
       </nav>
 
       <div class="header__actions">
-        <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="Переключить тему">
           <svg class="theme-toggle__icon theme-toggle__icon--light" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="12" cy="12" r="4" />
             <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
@@ -61,14 +61,61 @@
           </svg>
         </button>
 
-        <button type="button" class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
+        <button type="button" class="burger header__burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="primary-nav">
           <span class="burger__icon" aria-hidden="true"></span>
         </button>
       </div>
     </div>
   </header>
 
-  <main class="main" id="app"></main>
+  <main class="main" id="app">
+    <section class="catalog-intro">
+      <div class="container">
+        <p class="eyebrow">PLANTS</p>
+        <h1 class="h2">Bring a little more life into your space.</h1>
+        <p class="hero__text">Explore our collection of indoor plants and find one that fits your space and routine.</p>
+      </div>
+    </section>
+
+    <section class="catalog-categories">
+      <div class="container">
+        <nav class="category-nav" aria-label="Фильтр по категориям">
+          <button type="button" class="category-nav__item category-nav__item--active">All</button>
+          <button type="button" class="category-nav__item">Easy Care</button>
+          <button type="button" class="category-nav__item">Low Light</button>
+          <button type="button" class="category-nav__item">Pet Friendly</button>
+          <button type="button" class="category-nav__item">Tropical</button>
+          <button type="button" class="category-nav__item">Succulents</button>
+        </nav>
+      </div>
+    </section>
+
+    <section class="catalog-grid">
+      <div class="container">
+        <ul class="product-grid">
+          <li>
+            <article class="plant-card">
+              <div class="plant-card__image-wrap">
+                <img src="https://picsum.photos/seed/monstera/640/800" alt="Monstera Deliciosa in a ceramic pot" class="plant-card__image" width="640" height="800" />
+              </div>
+              <div class="plant-card__body">
+                <p class="plant-card__category">Tropical</p>
+                <h3 class="plant-card__name">Monstera Deliciosa</h3>
+                <p class="plant-card__price">$48</p>
+              </div>
+            </article>
+          </li>
+
+
+          <!-- ещё карточки повторяют структуру — заполнится из plants.json на этапе JS -->
+        </ul>
+
+        <div class="catalog-show-more">
+          <button type="button" class="button button--secondary" data-show-more>Show more</button>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
     <div class="footer__inner container">
@@ -77,7 +124,7 @@
         <p class="text-small">Plants for modern spaces.</p>
       </div>
 
-      <nav class="footer-nav" aria-label="Secondary navigation">
+      <nav class="footer-nav" aria-label="Навигация в подвале">
         <ul class="footer-nav__list">
           <li><a href="/#shop" class="footer-nav__link">Shop</a></li>
           <li><a href="/#spaces" class="footer-nav__link">Spaces</a></li>

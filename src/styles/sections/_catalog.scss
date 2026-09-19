@@ -1,0 +1,34 @@
+@use "../abstracts/breakpoints";
+
+.catalog-intro {
+  padding-block: var(--space-48) var(--space-32);
+}
+
+.catalog-categories {
+  padding-bottom: var(--space-32);
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-24);
+  padding-bottom: var(--space-64);
+
+  @include breakpoints.above-tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoints.above-desktop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.catalog-show-more {
+  display: flex;
+  justify-content: center;
+  padding-bottom: var(--space-64);
+
+  @include breakpoints.above-tablet {
+    display: none;
+  }
+}
