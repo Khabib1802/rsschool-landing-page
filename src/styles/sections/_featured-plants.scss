@@ -1,0 +1,41 @@
+@use "../abstracts/breakpoints";
+
+.featured-plants {
+  padding-block: var(--space-64);
+}
+
+.featured-plants__header {
+  margin-bottom: var(--space-32);
+}
+
+.plant-slider {
+  position: relative;
+}
+
+.plant-slider__track {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-24);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  @include breakpoints.above-tablet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include breakpoints.above-desktop {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.plant-slider__item {
+  min-width: 0;
+}
+
+.plant-slider__controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-8);
+  margin-top: var(--space-16);
+}

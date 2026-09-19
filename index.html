@@ -68,7 +68,113 @@
     </div>
   </header>
 
-  <main class="main" id="app"></main>
+  <main class="main" id="app">
+    <section class="hero">
+      <div class="hero__inner container">
+        <div class="hero__content">
+          <p class="eyebrow">MOSS / INDOOR PLANTS</p>
+          <h1 class="hero__title">Plants for modern spaces.</h1>
+          <p class="hero__text">Thoughtfully selected plants for the way you live.</p>
+          <a href="#featured-plants" class="button button--primary">Explore plants</a>
+        </div>
+
+        <div class="hero__media">
+          <img src="https://picsum.photos/800/1000" alt="Random image" class="hero__image" width="800" height="1000" />
+        </div>
+      </div>
+    </section>
+
+    <section class="featured-plants" id="featured-plants">
+      <div class="container">
+        <div class="featured-plants__header">
+          <p class="eyebrow">FEATURED PLANTS</p>
+          <h2 class="h2">A few of our favorites.</h2>
+          <p class="hero__text">Plants selected for different spaces, routines and levels of care.</p>
+        </div>
+
+        <div class="plant-slider">
+          <ul class="plant-slider__track">
+            <li class="plant-slider__item">
+              <article class="plant-card">
+                <div class="plant-card__image-wrap">
+                  <img src="https://picsum.photos/seed/monstera/640/800" alt="Monstera Deliciosa in a ceramic pot" class="plant-card__image" width="640" height="800" />
+                </div>
+                <div class="plant-card__body">
+                  <p class="plant-card__category">Tropical</p>
+                  <h3 class="plant-card__name">Monstera Deliciosa</h3>
+                  <p class="plant-card__price">$48</p>
+                  <div class="plant-card__characteristics">
+                    <span class="plant-card__characteristic">Light <span class="plant-card__indicator" aria-hidden="true">●●○○</span><span class="sr-only">2 out of 4</span></span>
+                    <span class="plant-card__characteristic">Water <span class="plant-card__indicator" aria-hidden="true">●●●○</span><span class="sr-only">3 out of 4</span></span>
+                    <span class="plant-card__characteristic">Care <span class="plant-card__indicator" aria-hidden="true">●●○○</span><span class="sr-only">2 out of 4</span></span>
+                  </div>
+                </div>
+              </article>
+            </li>
+
+            <li class="plant-slider__item">
+              <article class="plant-card">
+                <div class="plant-card__image-wrap">
+                  <img src="https://picsum.photos/seed/ficus-lyrata/640/800" alt="Ficus Lyrata in a terracotta pot" class="plant-card__image" width="640" height="800" />
+                </div>
+                <div class="plant-card__body">
+                  <p class="plant-card__category">Indoor Tree</p>
+                  <h3 class="plant-card__name">Ficus Lyrata</h3>
+                  <p class="plant-card__price">$65</p>
+                  <div class="plant-card__characteristics">
+                    <span class="plant-card__characteristic">Light <span class="plant-card__indicator" aria-hidden="true">●●●○</span><span class="sr-only">3 out of 4</span></span>
+                    <span class="plant-card__characteristic">Water <span class="plant-card__indicator" aria-hidden="true">●●○○</span><span class="sr-only">2 out of 4</span></span>
+                    <span class="plant-card__characteristic">Care <span class="plant-card__indicator" aria-hidden="true">●●●○</span><span class="sr-only">3 out of 4</span></span>
+                  </div>
+                </div>
+              </article>
+            </li>
+
+            <li class="plant-slider__item">
+              <article class="plant-card">
+                <div class="plant-card__image-wrap">
+                  <img src="https://picsum.photos/seed/sansevieria/640/800" alt="Sansevieria Trifasciata in a modern ceramic pot" class="plant-card__image" width="640" height="800" />
+                </div>
+                <div class="plant-card__body">
+                  <p class="plant-card__category">Succulent</p>
+                  <h3 class="plant-card__name">Sansevieria Trifasciata</h3>
+                  <p class="plant-card__price">$32</p>
+                  <div class="plant-card__characteristics">
+                    <span class="plant-card__characteristic">Light <span class="plant-card__indicator" aria-hidden="true">●○○○</span><span class="sr-only">1 out of 4</span></span>
+                    <span class="plant-card__characteristic">Water <span class="plant-card__indicator" aria-hidden="true">●○○○</span><span class="sr-only">1 out of 4</span></span>
+                    <span class="plant-card__characteristic">Care <span class="plant-card__indicator" aria-hidden="true">●○○○</span><span class="sr-only">1 out of 4</span></span>
+                  </div>
+                </div>
+              </article>
+            </li>
+
+            <!-- <li class="plant-slider__item">
+              <article class="plant-card">
+                <div class="plant-card__image-wrap">
+                  <img src="https://picsum.photos/seed/calathea-orbifolia/640/800" alt="Calathea Orbifolia with large striped leaves" class="plant-card__image" width="640" height="800" />
+                </div>
+                <div class="plant-card__body">
+                  <p class="plant-card__category">Tropical</p>
+                  <h3 class="plant-card__name">Calathea Orbifolia</h3>
+                  <p class="plant-card__price">$42</p>
+                  <div class="plant-card__characteristics">
+                    <span class="plant-card__characteristic">Light <span class="plant-card__indicator" aria-hidden="true">●●○○</span><span class="sr-only">2 out of 4</span></span>
+                    <span class="plant-card__characteristic">Water <span class="plant-card__indicator" aria-hidden="true">●●●●</span><span class="sr-only">4 out of 4</span></span>
+                    <span class="plant-card__characteristic">Care <span class="plant-card__indicator" aria-hidden="true">●●●○</span><span class="sr-only">3 out of 4</span></span>
+                  </div>
+                </div>
+              </article>
+            </li> -->
+          </ul>
+
+          <div class="plant-slider__controls">
+            <button type="button" class="button button--secondary" aria-label="Предыдущие растения">←</button>
+            <button type="button" class="button button--secondary" aria-label="Следующие растения">→</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
     <div class="footer__inner container">
