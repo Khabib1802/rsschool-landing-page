@@ -1,0 +1,15 @@
+.footer-nav__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.footer-nav__link {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--color-text);
+  }
+}

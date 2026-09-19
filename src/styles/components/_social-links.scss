@@ -1,0 +1,19 @@
+.social-links {
+  display: flex;
+  gap: var(--space-12);
+}
+
+.social-links__link {
+  color: var(--color-text-muted);
+  display: inline-flex;
+
+  svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: var(--color-primary);
+  }
+}

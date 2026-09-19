@@ -7,8 +7,11 @@
 @use "base/base";
 
 @use "layout/header";
+@use "layout/footer";
 
 @use "components/nav";
 @use "components/logo";
 @use "components/theme-toggle";
 @use "components/burger-button";
+@use "components/footer-nav";
+@use "components/social-links";
