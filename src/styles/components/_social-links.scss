@@ -4,8 +4,13 @@
 }
 
 .social-links__link {
-  color: var(--color-text-muted);
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-text);
+  transition: color 0.2s ease;
 
   svg {
     width: 1.125rem;
