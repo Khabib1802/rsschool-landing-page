@@ -19,10 +19,12 @@
 @use "components/button";
 @use "components/plant-card";
 @use "components/space-card";
+@use "components/characteristic-indicator";
+@use "components/note-card";
 
 @use "sections/hero";
 @use "sections/featured-plants";
 @use "sections/shop-by-space";
-
-@use "components/characteristic-indicator";
 @use "sections/characteristics";
+@use "sections/brand-story";
+@use "sections/plant-notes";
