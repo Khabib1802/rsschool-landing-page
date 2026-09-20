@@ -1,7 +1,11 @@
 @use "../abstracts/breakpoints";
 
 .shop-by-space {
-  padding-block: var(--space-64);
+  padding-block: var(--space-48);
+
+  @include breakpoints.above-desktop {
+    padding-block: var(--space-64);
+  }
 }
 
 .shop-by-space__header {

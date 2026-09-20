@@ -1,7 +1,12 @@
 @use "../abstracts/breakpoints";
 
 .featured-plants {
-  padding-block: var(--space-64);
+  padding-block: var(--space-48);
+  background-color: var(--color-surface);
+
+  @include breakpoints.above-desktop {
+    padding-block: var(--space-64);
+  }
 }
 
 .featured-plants__header {

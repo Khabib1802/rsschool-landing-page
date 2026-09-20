@@ -33,6 +33,11 @@
   font-weight: 600;
 }
 
+.plant-card__description {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
 .plant-card__price {
   font-weight: 600;
   color: var(--color-primary);

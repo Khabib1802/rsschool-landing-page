@@ -36,9 +36,13 @@
 
 .brand-story__image {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: var(--radius-md);
+
+  @include breakpoints.above-desktop {
+    aspect-ratio: 4 / 5;
+  }
 }
 
 .brand-story__content {
