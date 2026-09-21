@@ -13,13 +13,38 @@
   grid-template-columns: 1fr;
   gap: var(--space-24);
   padding-bottom: var(--space-64);
+  list-style: none;
+
+  > li {
+    &:nth-child(n + 4) {
+      display: none;
+    }
+  }
 
   @include breakpoints.above-tablet {
     grid-template-columns: repeat(2, 1fr);
+
+    > li {
+      &:nth-child(n + 4) {
+        display: list-item;
+      }
+      &:nth-child(n + 7) {
+        display: none;
+      }
+    }
   }
 
   @include breakpoints.above-desktop {
     grid-template-columns: repeat(3, 1fr);
+
+    > li {
+      &:nth-child(n + 7) {
+        display: list-item;
+      }
+      &:nth-child(n + 10) {
+        display: none;
+      }
+    }
   }
 }
 
@@ -27,8 +52,4 @@
   display: flex;
   justify-content: center;
   padding-bottom: var(--space-64);
-
-  @include breakpoints.above-tablet {
-    display: none;
-  }
 }
