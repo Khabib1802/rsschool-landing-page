@@ -23,6 +23,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  flex-grow: 1;
 }
 
 .plant-card__category {
@@ -44,6 +45,7 @@
 .plant-card__price {
   font-weight: 600;
   color: var(--color-primary);
+  margin-top: auto;
 }
 
 .plant-card__characteristics {
