@@ -11,7 +11,7 @@
 .product-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-24);
+  gap: var(--space-48) var(--space-24);
   padding-bottom: var(--space-64);
   list-style: none;
 
