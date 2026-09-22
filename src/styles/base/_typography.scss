@@ -1,0 +1,24 @@
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  line-height: var(--line-height-tight);
+  font-weight: 500;
+}
+
+h1 { font-size: var(--font-size-h1); }
+h2 { font-size: var(--font-size-h2); }
+h3 { font-size: var(--font-size-h3); }
+
+body { font-size: var(--font-size-body); }
+
+.text-small {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}

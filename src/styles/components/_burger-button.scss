@@ -1,0 +1,42 @@
+@use "../abstracts/breakpoints";
+
+.burger {
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  @include breakpoints.above-tablet {
+    display: none;
+  }
+}
+
+.burger__icon,
+.burger__icon::before,
+.burger__icon::after {
+  display: block;
+  width: 1.25rem;
+  height: 2px;
+  background-color: var(--color-text);
+  border-radius: 1px;
+  transition: transform var(--transition-fast);
+}
+
+.burger__icon {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+  }
+  &::before {
+    top: -6px;
+  }
+  &::after {
+    top: 6px;
+  }
+}

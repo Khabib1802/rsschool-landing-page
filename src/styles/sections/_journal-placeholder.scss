@@ -1,0 +1,18 @@
+.journal-placeholder {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  padding-block: var(--space-96);
+
+  .container {
+    max-width: 720px;
+  }
+}
+
+.journal-placeholder .h1 {
+  margin-block: var(--space-16) var(--space-24);
+}
+
+.journal-placeholder .hero__text {
+  margin-bottom: var(--space-32);
+}
