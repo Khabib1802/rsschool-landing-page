@@ -40,4 +40,4 @@
       <span class="submission-notice__tab-label">PR #1</span>
     </button>
   `,document.body.append(e);let t=e.querySelector(`.submission-notice__close`),n=e.querySelector(`.submission-notice__tab`),r=()=>{e.classList.add(`submission-notice--closed`),n.setAttribute(`aria-expanded`,`false`),localStorage.setItem(c,`true`)},i=()=>{e.classList.remove(`submission-notice--closed`),n.setAttribute(`aria-expanded`,`true`)};return t.addEventListener(`click`,r),n.addEventListener(`click`,i),localStorage.getItem(c)===`true`&&e.classList.add(`submission-notice--closed`),{notice:e,close:r,open:i}})();
-//# sourceMappingURL=main-B6-UUy9V.js.map
+//# sourceMappingURL=main-zl-aybIg.js.map
