@@ -73,12 +73,19 @@ const createPlantCard = (plant) => {
 /**
  * @param {HTMLElement} grid
  * @param {import("./api.js").Plant[]} plants
+ * @param {number} visibleCount
  */
-const renderPlants = (grid, plants) => {
+const renderPlants = (grid, plants, visibleCount) => {
   grid.replaceChildren();
 
-  plants.forEach((plant) => {
-    grid.append(createPlantCard(plant));
+  plants.forEach((plant, index) => {
+    const card = createPlantCard(plant);
+
+    if (index >= visibleCount) {
+      card.hidden = true;
+    }
+
+    grid.append(card);
   });
 };
 
@@ -107,12 +114,38 @@ const filterPlants = (plants, category) => {
   return plants.filter((plant) => plant.categories.includes(category));
 };
 
+/**
+ * @param {HTMLElement} grid
+ * @returns {number}
+ */
+const getPageSize = (grid) => {
+  const value = getComputedStyle(grid)
+    .getPropertyValue("--catalog-page-size")
+    .trim();
+
+  return Number.parseInt(value, 10);
+};
+
+/**
+ * @param {HTMLElement | null} button
+ * @param {number} visibleCount
+ * @param {number} totalCount
+ */
+const updateShowMoreButton = (button, visibleCount, totalCount) => {
+  if (!button) return;
+
+  console.log(visibleCount >= totalCount);
+
+  button.style.display = visibleCount >= totalCount ? "none" : "";
+};
+
 export const initCatalog = async () => {
   const grid = document.querySelector("[data-plant-grid]");
 
   if (!grid) return;
 
   const categoryButtons = document.querySelectorAll("[data-category]");
+  const showMoreButton = document.querySelector("[data-show-more]");
 
   const plants = await loadPlants();
 
@@ -121,17 +154,38 @@ export const initCatalog = async () => {
     return;
   }
 
-  let activeCategory = "all";
+  const pageSize = getPageSize(grid);
 
-  renderPlants(grid, plants);
+  let activeCategory = "all";
+  let currentPlants = plants;
+  let visibleCount = pageSize;
+
+  const updateCatalog = () => {
+    renderPlants(grid, currentPlants, visibleCount);
+
+    console.log(visibleCount, currentPlants.length);
+
+    updateShowMoreButton(showMoreButton, visibleCount, currentPlants.length);
+  };
+
+  updateCatalog();
 
   categoryButtons.forEach((button) => {
     button.addEventListener("click", () => {
       activeCategory = button.dataset.category ?? "all";
 
-      const filteredPlants = filterPlants(plants, activeCategory);
+      currentPlants = filterPlants(plants, activeCategory);
+      visibleCount = pageSize;
 
-      renderPlants(grid, filteredPlants);
+      updateCatalog();
     });
   });
+
+  if (showMoreButton) {
+    showMoreButton.addEventListener("click", () => {
+      visibleCount += pageSize;
+
+      updateCatalog();
+    });
+  }
 };
