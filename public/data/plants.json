@@ -3,7 +3,7 @@
     "id": "monstera-deliciosa",
     "name": "Monstera Deliciosa",
     "description": "A tropical plant with large split leaves and a naturally spreading growth habit.",
-    "image": "/images/plants/monstera-deliciosa.jpg",
+    "image": "./images/plants/monstera-deliciosa.jpg",
     "categories": ["tropical"],
     "spaces": ["living-room", "bedroom", "office"],
     "characteristics": {
@@ -29,7 +29,7 @@
     "id": "snake-plant",
     "name": "Snake Plant",
     "description": "A hardy upright plant with stiff sword-shaped leaves and strong architectural form.",
-    "image": "/images/plants/snake-plant.jpg",
+    "image": "./images/plants/snake-plant.jpg",
     "categories": ["easy-care", "low-light"],
     "spaces": ["bedroom", "office", "bathroom"],
     "characteristics": {
@@ -55,7 +55,7 @@
     "id": "zz-plant",
     "name": "ZZ Plant",
     "description": "A resilient plant with glossy leaflets and a naturally compact, upright form.",
-    "image": "/images/plants/zz-plant.jpg",
+    "image": "./images/plants/zz-plant.jpg",
     "categories": ["easy-care", "low-light"],
     "spaces": ["bedroom", "office", "living-room"],
     "characteristics": {
@@ -81,7 +81,7 @@
     "id": "fiddle-leaf-fig",
     "name": "Fiddle Leaf Fig",
     "description": "A tall indoor fig with broad, violin-shaped leaves and an upright growth habit.",
-    "image": "/images/plants/fiddle-leaf-fig.jpg",
+    "image": "./images/plants/fiddle-leaf-fig.jpg",
     "categories": ["tropical"],
     "spaces": ["living-room", "office"],
     "characteristics": {
@@ -107,7 +107,7 @@
     "id": "pilea-peperomioides",
     "name": "Pilea Peperomioides",
     "description": "A compact houseplant with distinctive round leaves carried on long slender stems.",
-    "image": "/images/plants/pilea-peperomioides.jpg",
+    "image": "./images/plants/pilea-peperomioides.jpg",
     "categories": ["easy-care"],
     "spaces": ["office", "bedroom", "bathroom"],
     "characteristics": {
@@ -133,7 +133,7 @@
     "id": "calathea-orbifolia",
     "name": "Calathea Orbifolia",
     "description": "A foliage plant with broad rounded leaves marked by distinctive pale green stripes.",
-    "image": "/images/plants/calathea-orbifolia.jpg",
+    "image": "./images/plants/calathea-orbifolia.jpg",
     "categories": ["tropical"],
     "spaces": ["bathroom", "bedroom"],
     "characteristics": {
@@ -159,7 +159,7 @@
     "id": "aloe-vera",
     "name": "Aloe Vera",
     "description": "A compact succulent with thick pointed leaves arranged in an upright rosette.",
-    "image": "/images/plants/aloe-vera.jpg",
+    "image": "./images/plants/aloe-vera.jpg",
     "categories": ["easy-care", "succulent"],
     "spaces": ["office", "bedroom", "living-room"],
     "characteristics": {
@@ -185,7 +185,7 @@
     "id": "string-of-pearls",
     "name": "String of Pearls",
     "description": "A trailing succulent with slender stems covered in small spherical leaves.",
-    "image": "/images/plants/string-of-pearls.jpg",
+    "image": "./images/plants/string-of-pearls.jpg",
     "categories": ["easy-care", "succulent"],
     "spaces": ["office", "bedroom", "living-room"],
     "characteristics": {
@@ -211,7 +211,7 @@
     "id": "rubber-plant",
     "name": "Rubber Plant",
     "description": "A robust indoor tree with broad glossy leaves and an upright growth habit.",
-    "image": "/images/plants/rubber-plant.jpg",
+    "image": "./images/plants/rubber-plant.jpg",
     "categories": ["easy-care", "tropical"],
     "spaces": ["living-room", "office", "bedroom"],
     "characteristics": {
@@ -237,7 +237,7 @@
     "id": "bird-of-paradise",
     "name": "Bird of Paradise",
     "description": "A large tropical plant with tall stems and broad paddle-shaped leaves.",
-    "image": "/images/plants/bird-of-paradise.jpg",
+    "image": "./images/plants/bird-of-paradise.jpg",
     "categories": ["tropical"],
     "spaces": ["living-room"],
     "characteristics": {
@@ -263,7 +263,7 @@
     "id": "peperomia",
     "name": "Peperomia",
     "description": "A compact houseplant with thick decorative leaves and an adaptable growth habit.",
-    "image": "/images/plants/peperomia.jpg",
+    "image": "./images/plants/peperomia.jpg",
     "categories": ["easy-care", "pet-friendly"],
     "spaces": ["office", "bedroom", "bathroom"],
     "characteristics": {
@@ -289,7 +289,7 @@
     "id": "boston-fern",
     "name": "Boston Fern",
     "description": "A lush fern with long arching fronds that form a full, softly cascading shape.",
-    "image": "/images/plants/boston-fern.jpg",
+    "image": "./images/plants/boston-fern.jpg",
     "categories": ["pet-friendly", "tropical"],
     "spaces": ["bathroom", "bedroom", "living-room"],
     "characteristics": {
@@ -315,7 +315,7 @@
     "id": "hoya-carnosa",
     "name": "Hoya Carnosa",
     "description": "A trailing tropical plant with thick waxy leaves and clusters of small star-shaped flowers.",
-    "image": "/images/plants/hoya-carnosa.jpg",
+    "image": "./images/plants/hoya-carnosa.jpg",
     "categories": ["easy-care", "pet-friendly", "tropical"],
     "spaces": ["office", "bedroom", "living-room"],
     "characteristics": {
@@ -341,7 +341,7 @@
     "id": "maranta",
     "name": "Maranta",
     "description": "A compact tropical plant with patterned leaves and distinctive contrasting veins.",
-    "image": "/images/plants/maranta.jpg",
+    "image": "./images/plants/maranta.jpg",
     "categories": ["pet-friendly", "tropical"],
     "spaces": ["bedroom", "bathroom", "office"],
     "characteristics": {
@@ -367,7 +367,7 @@
     "id": "tradescantia-zebrina",
     "name": "Tradescantia Zebrina",
     "description": "A trailing plant with striped silver-green leaves and deep purple undersides.",
-    "image": "/images/plants/tradescantia-zebrina.jpg",
+    "image": "./images/plants/tradescantia-zebrina.jpg",
     "categories": ["easy-care"],
     "spaces": ["office", "bedroom", "living-room"],
     "characteristics": {
@@ -393,7 +393,7 @@
     "id": "anthurium-andraeanum",
     "name": "Anthurium",
     "description": "A tropical houseplant with glossy leaves and long-lasting colorful flower-like spathes.",
-    "image": "/images/plants/anthurium.jpg",
+    "image": "./images/plants/anthurium.jpg",
     "categories": ["tropical"],
     "spaces": ["living-room", "bathroom", "bedroom"],
     "characteristics": {
@@ -419,7 +419,7 @@
     "id": "caladium",
     "name": "Caladium",
     "description": "A tropical foliage plant with broad heart-shaped leaves in striking shades of green, pink and white.",
-    "image": "/images/plants/caladium.jpg",
+    "image": "./images/plants/caladium.jpg",
     "categories": ["tropical"],
     "spaces": ["living-room", "bathroom", "bedroom"],
     "characteristics": {
