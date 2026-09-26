@@ -94,10 +94,25 @@ const renderError = (grid, message) => {
   grid.replaceChildren(item);
 };
 
+/**
+ * @param {import("./api.js").Plant[]} plants
+ * @param {string} category
+ * @returns {import("./api.js").Plant[]}
+ */
+const filterPlants = (plants, category) => {
+  if (category === "all") {
+    return plants;
+  }
+
+  return plants.filter((plant) => plant.categories.includes(category));
+};
+
 export const initCatalog = async () => {
   const grid = document.querySelector("[data-plant-grid]");
 
   if (!grid) return;
+
+  const categoryButtons = document.querySelectorAll("[data-category]");
 
   const plants = await loadPlants();
 
@@ -106,5 +121,17 @@ export const initCatalog = async () => {
     return;
   }
 
+  let activeCategory = "all";
+
   renderPlants(grid, plants);
+
+  categoryButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      activeCategory = button.dataset.category ?? "all";
+
+      const filteredPlants = filterPlants(plants, activeCategory);
+
+      renderPlants(grid, filteredPlants);
+    });
+  });
 };
