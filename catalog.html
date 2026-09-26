@@ -210,6 +210,38 @@
     </div>
   </footer>
 
+  <dialog class="plant-modal" data-js="plant-modal">
+    <div class="plant-modal__content">
+      <button class="plant-modal__close" type="button" data-modal-close aria-label="Close plant details">
+        ×
+      </button>
+
+      <div class="plant-modal__image-wrap">
+        <img class="plant-modal__image" data-modal-image src="" alt="" width="640" height="800">
+      </div>
+
+      <div class="plant-modal__body">
+        <p class="plant-modal__category" data-modal-category></p>
+
+        <h2 class="plant-modal__name" data-modal-name></h2>
+
+        <p class="plant-modal__description" data-modal-description></p>
+
+        <div class="plant-modal__characteristics">
+        </div>
+
+        <div class="plant-modal__options">
+        </div>
+
+        <p class="plant-modal__price" data-modal-price></p>
+
+        <button class="button" type="button">
+          Add to collection
+        </button>
+      </div>
+    </div>
+  </dialog>
+
   <script type="module" src="/src/js/main.js"></script>
 </body>
 

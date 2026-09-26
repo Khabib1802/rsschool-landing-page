@@ -23,7 +23,7 @@ const getCategoryLabel = (category) => CATEGORY_LABELS[category] ?? category;
  */
 const createPlantCard = (plant) => {
   const item = document.createElement("li");
-  const link = document.createElement("a");
+  const card = document.createElement("div");
   const imageWrap = document.createElement("div");
   const image = document.createElement("img");
   const body = document.createElement("div");
@@ -36,9 +36,8 @@ const createPlantCard = (plant) => {
 
   item.dataset.plantId = plant.id;
 
-  link.href = "./catalog.html";
-  link.className = "plant-card";
-  link.setAttribute("aria-label", `View ${plant.name}`);
+  card.className = "plant-card";
+  card.setAttribute("aria-label", `View ${plant.name}`);
 
   imageWrap.className = "plant-card__image-wrap";
 
@@ -64,8 +63,8 @@ const createPlantCard = (plant) => {
 
   imageWrap.append(image);
   body.append(category, name, description, price);
-  link.append(imageWrap, body);
-  item.append(link);
+  card.append(imageWrap, body);
+  item.append(card);
 
   return item;
 };
