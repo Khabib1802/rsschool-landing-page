@@ -40,3 +40,19 @@
   font-size: var(--font-size-small);
   color: var(--color-text-muted);
 }
+
+.characteristic__value {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.characteristic__indicator {
+  width: 8px;
+  height: 8px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.characteristic__indicator--active {
+  background: currentColor;
+}

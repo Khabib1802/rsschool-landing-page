@@ -30,6 +30,8 @@ const renderPlant = (modal, plant) => {
   if (description) {
     description.textContent = plant.description;
   }
+
+  renderCharacteristics(modal, plant);
 };
 
 /**
@@ -37,6 +39,38 @@ const renderPlant = (modal, plant) => {
  */
 const closeModal = (modal) => {
   modal.close();
+};
+
+/**
+ * @param {HTMLDialogElement} modal
+ * @param {import("./api.js").Plant} plant
+ */
+const renderCharacteristics = (modal, plant) => {
+  const characteristics = ["light", "water", "care"];
+
+  characteristics.forEach((characteristic) => {
+    const value = plant.characteristics[characteristic];
+
+    const element = modal.querySelector(
+      `[data-characteristic-value="${characteristic}"]`,
+    );
+
+    if (!element) return;
+
+    element.replaceChildren();
+
+    for (let index = 1; index <= 4; index += 1) {
+      const indicator = document.createElement("span");
+
+      indicator.className = "characteristic__indicator";
+
+      if (index <= value) {
+        indicator.classList.add("characteristic__indicator--active");
+      }
+
+      element.append(indicator);
+    }
+  });
 };
 
 export const initModal = async () => {
