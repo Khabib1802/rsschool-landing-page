@@ -245,9 +245,55 @@
         </div>
 
         <div class="plant-modal__options">
+          <div class="plant-modal__options">
+
+            <fieldset class="plant-modal__option">
+              <legend>Size</legend>
+
+              <label>
+                <input type="radio" name="plant-size" value="small" data-modal-size checked>
+                <span>Small</span>
+              </label>
+
+              <label>
+                <input type="radio" name="plant-size" value="medium" data-modal-size>
+                <span>Medium</span>
+              </label>
+
+              <label>
+                <input type="radio" name="plant-size" value="large" data-modal-size>
+                <span>Large</span>
+              </label>
+            </fieldset>
+
+            <fieldset class="plant-modal__option">
+              <legend>Pot</legend>
+
+              <label>
+                <input type="radio" name="plant-pot" value="none" data-modal-pot checked>
+                <span>None</span>
+              </label>
+
+              <label>
+                <input type="radio" name="plant-pot" value="ceramic" data-modal-pot>
+                <span>Ceramic</span>
+              </label>
+
+              <label>
+                <input type="radio" name="plant-pot" value="stone" data-modal-pot>
+                <span>Stone</span>
+              </label>
+            </fieldset>
+
+            <div class="plant-modal__quantity">
+              <label for="plant-quantity">Quantity</label>
+
+              <input id="plant-quantity" type="number" min="1" value="1" data-modal-quantity>
+            </div>
+          </div>
         </div>
 
-        <p class="plant-modal__price" data-modal-price></p>
+        <p class="plant-modal__price" data-modal-price aria-live="polite"></p>
 
         <button class="button" type="button">
           Add to collection

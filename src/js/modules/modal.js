@@ -1,4 +1,5 @@
 import { loadPlants } from "./api.js";
+import { calculateUnitPrice, calculateTotalPrice } from "./pricing.js";
 
 /**
  * @typedef {import("./api.js").Plant} Plant
@@ -73,6 +74,47 @@ const renderCharacteristics = (modal, plant) => {
   });
 };
 
+/**
+ * @param {HTMLDialogElement} modal
+ * @param {import("./api.js").Plant} plant
+ * @param {"small" | "medium" | "large"} size
+ * @param {"none" | "ceramic" | "stone"} pot
+ * @param {number} quantity
+ */
+const updatePrice = (modal, plant, size, pot, quantity) => {
+  const priceElement = modal.querySelector("[data-modal-price]");
+
+  if (!priceElement) return;
+
+  const unitPrice = calculateUnitPrice(plant, size, pot);
+  const totalPrice = calculateTotalPrice(unitPrice, quantity);
+
+  priceElement.textContent = `$${totalPrice}`;
+};
+
+/**
+ * @param {HTMLDialogElement} modal
+ */
+const resetOptions = (modal) => {
+  const smallSize = modal.querySelector('[data-modal-size][value="small"]');
+
+  const noPot = modal.querySelector('[data-modal-pot][value="none"]');
+
+  const quantityInput = modal.querySelector("[data-modal-quantity]");
+
+  if (smallSize instanceof HTMLInputElement) {
+    smallSize.checked = true;
+  }
+
+  if (noPot instanceof HTMLInputElement) {
+    noPot.checked = true;
+  }
+
+  if (quantityInput instanceof HTMLInputElement) {
+    quantityInput.value = "1";
+  }
+};
+
 export const initModal = async () => {
   const modal = document.querySelector('[data-js="plant-modal"]');
 
@@ -85,6 +127,51 @@ export const initModal = async () => {
   if (plants.length === 0) {
     return;
   }
+
+  let currentPlant = null;
+
+  let selectedSize = "small";
+  let selectedPot = "none";
+  let quantity = 1;
+
+  const sizeInputs = modal.querySelectorAll("[data-modal-size]");
+  const potInputs = modal.querySelectorAll("[data-modal-pot]");
+  const quantityInput = modal.querySelector("[data-modal-quantity]");
+
+  sizeInputs.forEach((input) => {
+    input.addEventListener("change", () => {
+      if (!(input instanceof HTMLInputElement)) return;
+      if (!currentPlant) return;
+
+      selectedSize = input.value;
+
+      updatePrice(modal, currentPlant, selectedSize, selectedPot, quantity);
+    });
+  });
+
+  potInputs.forEach((input) => {
+    input.addEventListener("change", () => {
+      if (!(input instanceof HTMLInputElement)) return;
+      if (!currentPlant) return;
+
+      selectedPot = input.value;
+
+      updatePrice(modal, currentPlant, selectedSize, selectedPot, quantity);
+    });
+  });
+
+  quantityInput?.addEventListener("input", () => {
+    if (!(quantityInput instanceof HTMLInputElement)) return;
+    if (!currentPlant) return;
+
+    const value = Number.parseInt(quantityInput.value, 10);
+
+    quantity = Number.isNaN(value) || value < 1 ? 1 : value;
+
+    quantityInput.value = String(quantity);
+
+    updatePrice(modal, currentPlant, selectedSize, selectedPot, quantity);
+  });
 
   const closeButton = modal.querySelector("[data-modal-close]");
 
@@ -111,7 +198,17 @@ export const initModal = async () => {
       return;
     }
 
+    currentPlant = plant;
+
+    selectedSize = "small";
+    selectedPot = "none";
+    quantity = 1;
+
+    resetOptions(modal);
     renderPlant(modal, plant);
+
+    updatePrice(modal, plant, selectedSize, selectedPot, quantity);
+
     modal.showModal();
   });
 
