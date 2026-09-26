@@ -1,5 +1,3 @@
-import { loadPlants } from "./api.js";
-
 /**
  * @type {Record<string, string>}
  */
@@ -8,7 +6,16 @@ const CATEGORY_LABELS = {
   "low-light": "Low Light",
   "pet-friendly": "Pet Friendly",
   tropical: "Tropical",
-  succulent: "Succulent",
+  succulent: "Succulents",
+};
+
+/**
+ * @type {Record<string, string>}
+ */
+const BREAKPOINTS = {
+  mobile: "(max-width: 768px)",
+  tablet: "(min-width: 769px) and (max-width: 1199px)",
+  desktop: "(min-width: 1200px)",
 };
 
 /**
@@ -32,8 +39,6 @@ const createPlantCard = (plant) => {
   const description = document.createElement("p");
   const price = document.createElement("p");
 
-  const firstCategory = plant.categories[0];
-
   item.dataset.plantId = plant.id;
 
   card.className = "plant-card";
@@ -50,7 +55,7 @@ const createPlantCard = (plant) => {
   body.className = "plant-card__body";
 
   category.className = "plant-card__category";
-  category.textContent = getCategoryLabel(firstCategory);
+  category.textContent = plant.categories.map(getCategoryLabel).join(" · ");
 
   name.className = "plant-card__name";
   name.textContent = plant.name;
@@ -94,6 +99,7 @@ const renderPlants = (grid, plants, visibleCount) => {
  */
 const renderError = (grid, message) => {
   const item = document.createElement("li");
+
   item.className = "plant-card__error";
   item.textContent = message;
 
@@ -133,12 +139,13 @@ const getPageSize = (grid) => {
 const updateShowMoreButton = (button, visibleCount, totalCount) => {
   if (!button) return;
 
-  console.log(visibleCount >= totalCount);
-
   button.style.display = visibleCount >= totalCount ? "none" : "";
 };
 
-export const initCatalog = async () => {
+/**
+ * @param {import("./api.js").Plant[]} plants
+ */
+export const initCatalog = (plants) => {
   const grid = document.querySelector("[data-plant-grid]");
 
   if (!grid) return;
@@ -146,45 +153,40 @@ export const initCatalog = async () => {
   const categoryButtons = document.querySelectorAll("[data-category]");
   const showMoreButton = document.querySelector("[data-show-more]");
 
-  const plants = await loadPlants();
-
-  if (plants.length === 0) {
-    renderError(grid, "Unable to load plants");
-    return;
-  }
-
-  const pageSize = getPageSize(grid);
-
-  let activeCategory = "all";
   let currentPlants = plants;
-  let visibleCount = pageSize;
+  let visibleCount = getPageSize(grid);
 
   const updateCatalog = () => {
     renderPlants(grid, currentPlants, visibleCount);
-
-    console.log(visibleCount, currentPlants.length);
-
     updateShowMoreButton(showMoreButton, visibleCount, currentPlants.length);
+  };
+
+  const resetPagination = () => {
+    visibleCount = getPageSize(grid);
+    updateCatalog();
   };
 
   updateCatalog();
 
   categoryButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      activeCategory = button.dataset.category ?? "all";
+      const category = button.dataset.category ?? "all";
 
-      currentPlants = filterPlants(plants, activeCategory);
-      visibleCount = pageSize;
-
-      updateCatalog();
+      currentPlants = filterPlants(plants, category);
+      resetPagination();
     });
   });
 
-  if (showMoreButton) {
-    showMoreButton.addEventListener("click", () => {
-      visibleCount += pageSize;
+  showMoreButton?.addEventListener("click", () => {
+    visibleCount += getPageSize(grid);
+    updateCatalog();
+  });
 
-      updateCatalog();
-    });
-  }
+  const mediaQueries = Object.values(BREAKPOINTS).map((query) =>
+    window.matchMedia(query),
+  );
+
+  mediaQueries.forEach((mq) => {
+    mq.addEventListener("change", resetPagination);
+  });
 };

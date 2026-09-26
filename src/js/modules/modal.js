@@ -1,4 +1,3 @@
-import { loadPlants } from "./api.js";
 import { calculateUnitPrice, calculateTotalPrice } from "./pricing.js";
 
 /**
@@ -115,16 +114,13 @@ const resetOptions = (modal) => {
   }
 };
 
-export const initModal = async () => {
+/**
+ * @param {import("./api.js").Plant[]} plants
+ */
+export const initModal = (plants) => {
   const modal = document.querySelector('[data-js="plant-modal"]');
 
   if (!(modal instanceof HTMLDialogElement)) {
-    return;
-  }
-
-  const plants = await loadPlants();
-
-  if (plants.length === 0) {
     return;
   }
 
