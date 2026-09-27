@@ -1,6 +1,23 @@
 import { calculateUnitPrice, calculateTotalPrice } from "./pricing.js";
 
 /**
+ * @type {Record<string, string>}
+ */
+const CATEGORY_LABELS = {
+  "easy-care": "Easy Care",
+  "low-light": "Low Light",
+  "pet-friendly": "Pet Friendly",
+  tropical: "Tropical",
+  succulent: "Succulents",
+};
+
+/**
+ * @param {string} category
+ * @returns {string}
+ */
+const getCategoryLabel = (category) => CATEGORY_LABELS[category] ?? category;
+
+/**
  * @typedef {import("./api.js").Plant} Plant
  */
 
@@ -20,7 +37,7 @@ const renderPlant = (modal, plant) => {
   }
 
   if (category) {
-    category.textContent = plant.categories[0] ?? "";
+    category.textContent = plant.categories.map(getCategoryLabel).join(" · ");
   }
 
   if (name) {
@@ -205,10 +222,35 @@ export const initModal = (plants) => {
 
     updatePrice(modal, plant, selectedSize, selectedPot, quantity);
 
+    lockPageScroll();
     modal.showModal();
   });
 
   closeButton?.addEventListener("click", () => {
     closeModal(modal);
   });
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closeModal(modal);
+    }
+  });
+
+  modal.addEventListener("close", () => {
+    unlockPageScroll();
+  });
+
+  const submitButton = modal.querySelector("[data-modal-submit]");
+
+  submitButton?.addEventListener("click", () => {
+    closeModal(modal);
+  });
+};
+
+const lockPageScroll = () => {
+  document.body.style.overflow = "hidden";
+};
+
+const unlockPageScroll = () => {
+  document.body.style.overflow = "";
 };
