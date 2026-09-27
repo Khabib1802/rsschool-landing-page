@@ -94,19 +94,6 @@ const renderPlants = (grid, plants, visibleCount) => {
 };
 
 /**
- * @param {HTMLElement} grid
- * @param {string} message
- */
-const renderError = (grid, message) => {
-  const item = document.createElement("li");
-
-  item.className = "plant-card__error";
-  item.textContent = message;
-
-  grid.replaceChildren(item);
-};
-
-/**
  * @param {import("./api.js").Plant[]} plants
  * @param {string} category
  * @returns {import("./api.js").Plant[]}

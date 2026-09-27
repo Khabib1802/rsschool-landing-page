@@ -1,20 +1,12 @@
+import { BREAKPOINTS } from "../constants.js";
+import { createPlantCard } from "../components/plant-card.js";
+
 const FEATURED_COUNT = 5;
 
-const BREAKPOINTS = {
-  tablet: 769,
-  desktop: 1200,
-};
-
-const CATEGORY_LABELS = {
-  "easy-care": "Easy Care",
-  "low-light": "Low Light",
-  "pet-friendly": "Pet Friendly",
-  tropical: "Tropical",
-  succulent: "Succulents",
-};
-
-const getCategoryLabel = (category) => CATEGORY_LABELS[category] ?? category;
-
+/**
+ * @param {import("../types.js").Plant[]} plants
+ * @returns {import("../types.js").Plant[]}
+ */
 const shufflePlants = (plants) => {
   const shuffled = [...plants];
 
@@ -38,59 +30,25 @@ const getSlidesPerView = () => {
     return 3;
   }
 
-  if (window.innerWidth >= BREAKPOINTS.tablet) {
+  if (window.innerWidth > BREAKPOINTS.mobile) {
     return 2;
   }
 
   return 1;
 };
 
-const createPlantCard = (plant) => {
-  const item = document.createElement("li");
-  const card = document.createElement("a");
-  const imageWrap = document.createElement("div");
-  const image = document.createElement("img");
-  const body = document.createElement("div");
-  const category = document.createElement("p");
-  const name = document.createElement("h3");
-  const description = document.createElement("p");
-  const price = document.createElement("p");
-
-  item.className = "plant-slider__item";
-
-  card.className = "plant-card";
-  card.href = "./catalog.html";
-  card.setAttribute("aria-label", `View ${plant.name} in the catalog`);
-
-  imageWrap.className = "plant-card__image-wrap";
-
-  image.src = plant.image;
-  image.alt = plant.name;
-  image.className = "plant-card__image";
-  image.width = 640;
-  image.height = 800;
-
-  body.className = "plant-card__body";
-
-  category.className = "plant-card__category";
-  category.textContent = plant.categories.map(getCategoryLabel).join(" · ");
-
-  name.className = "plant-card__name";
-  name.textContent = plant.name;
-
-  description.className = "plant-card__description";
-  description.textContent = plant.description;
-
-  price.className = "plant-card__price";
-  price.textContent = `$${plant.pricing.base}`;
-
-  imageWrap.append(image);
-  body.append(category, name, description, price);
-  card.append(imageWrap, body);
-  item.append(card);
-
-  return item;
-};
+/**
+ * @param {import("../types.js").Plant} plant
+ * @returns {HTMLLIElement}
+ */
+const createSlideCard = (plant) =>
+  createPlantCard(plant, {
+    as: "a",
+    href: "./catalog.html",
+    headingLevel: "h3",
+    ariaLabel: `View ${plant.name} in the catalog`,
+    itemClassName: "plant-slider__item",
+  });
 
 export const initSlider = (plants) => {
   const track = document.querySelector("[data-featured-track]");
@@ -143,7 +101,7 @@ export const initSlider = (plants) => {
   };
 
   const render = () => {
-    track.replaceChildren(...featuredPlants.map(createPlantCard));
+    track.replaceChildren(...featuredPlants.map(createSlideCard));
 
     updateControls();
   };

@@ -1,24 +1,8 @@
 import { calculateUnitPrice, calculateTotalPrice } from "./pricing.js";
+import { getCategoryLabel } from "../constants.js";
 
 /**
- * @type {Record<string, string>}
- */
-const CATEGORY_LABELS = {
-  "easy-care": "Easy Care",
-  "low-light": "Low Light",
-  "pet-friendly": "Pet Friendly",
-  tropical: "Tropical",
-  succulent: "Succulents",
-};
-
-/**
- * @param {string} category
- * @returns {string}
- */
-const getCategoryLabel = (category) => CATEGORY_LABELS[category] ?? category;
-
-/**
- * @typedef {import("./api.js").Plant} Plant
+ * @typedef {import("../types.js").Plant} Plant
  */
 
 /**
@@ -60,7 +44,7 @@ const closeModal = (modal) => {
 
 /**
  * @param {HTMLDialogElement} modal
- * @param {import("./api.js").Plant} plant
+ * @param {import("../types.js").Plant} plant
  */
 const renderCharacteristics = (modal, plant) => {
   const characteristics = ["light", "water", "care"];
@@ -92,7 +76,7 @@ const renderCharacteristics = (modal, plant) => {
 
 /**
  * @param {HTMLDialogElement} modal
- * @param {import("./api.js").Plant} plant
+ * @param {import("../types.js").Plant} plant
  * @param {"small" | "medium" | "large"} size
  * @param {"none" | "ceramic" | "stone"} pot
  * @param {number} quantity
@@ -132,7 +116,7 @@ const resetOptions = (modal) => {
 };
 
 /**
- * @param {import("./api.js").Plant[]} plants
+ * @param {import("../types.js").Plant[]} plants
  */
 export const initModal = (plants) => {
   const modal = document.querySelector('[data-js="plant-modal"]');
@@ -222,7 +206,6 @@ export const initModal = (plants) => {
 
     updatePrice(modal, plant, selectedSize, selectedPot, quantity);
 
-    lockPageScroll();
     modal.showModal();
   });
 
@@ -236,21 +219,11 @@ export const initModal = (plants) => {
     }
   });
 
-  modal.addEventListener("close", () => {
-    unlockPageScroll();
-  });
+  modal.addEventListener("close", () => {});
 
   const submitButton = modal.querySelector("[data-modal-submit]");
 
   submitButton?.addEventListener("click", () => {
     closeModal(modal);
   });
-};
-
-const lockPageScroll = () => {
-  document.body.style.overflow = "hidden";
-};
-
-const unlockPageScroll = () => {
-  document.body.style.overflow = "";
 };
