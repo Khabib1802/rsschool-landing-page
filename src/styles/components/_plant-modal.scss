@@ -14,7 +14,7 @@
   overflow: hidden;
 
   &::backdrop {
-    background-color: rgb(0 0 0 / 0.45);
+    background-color: var(--overlay-color);
   }
 }
 

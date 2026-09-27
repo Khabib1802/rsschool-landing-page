@@ -1,0 +1,6 @@
+.overlay-scrim {
+  position: fixed;
+  inset: 0;
+  background-color: var(--overlay-color);
+  transition: var(--overlay-transition);
+}

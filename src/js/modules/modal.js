@@ -1,5 +1,6 @@
 import { calculateUnitPrice, calculateTotalPrice } from "./pricing.js";
 import { getCategoryLabel } from "../constants.js";
+import { lockScroll, unlockScroll } from "../utils/scroll-lock.js";
 
 /**
  * @typedef {import("../types.js").Plant} Plant
@@ -206,6 +207,7 @@ export const initModal = (plants) => {
 
     updatePrice(modal, plant, selectedSize, selectedPot, quantity);
 
+    lockScroll();
     modal.showModal();
   });
 
@@ -219,7 +221,9 @@ export const initModal = (plants) => {
     }
   });
 
-  modal.addEventListener("close", () => {});
+  modal.addEventListener("close", () => {
+    unlockScroll();
+  });
 
   const submitButton = modal.querySelector("[data-modal-submit]");
 

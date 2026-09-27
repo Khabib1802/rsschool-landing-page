@@ -29,3 +29,8 @@ body {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
 }
+
+body.is-scroll-locked {
+  overflow: hidden;
+  padding-right: var(--scrollbar-width, 0px);
+}
