@@ -116,152 +116,16 @@
         </div>
 
         <div class="plant-slider">
-          <ul class="plant-slider__track">
-            <li class="plant-slider__item">
-              <a href="./catalog.html" class="plant-card" aria-label="View Monstera Deliciosa in the catalog">
-                <div class="plant-card__image-wrap">
-                  <img src="/images/plants/monstera-deliciosa.jpg" alt="Monstera Deliciosa" class="plant-card__image" width="640" height="800" />
-                </div>
-
-                <div class="plant-card__body">
-                  <p class="plant-card__category">Tropical</p>
-
-                  <h3 class="plant-card__name">Monstera Deliciosa</h3>
-
-                  <p class="plant-card__description">
-                    A bold, easy-growing climber with iconic split leaves.
-                  </p>
-
-                  <p class="plant-card__price">$48</p>
-
-                  <div class="plant-card__characteristics">
-                    <span class="plant-card__characteristic">
-                      Light
-                      <span class="plant-card__indicator" aria-hidden="true">
-                        ●●●○
-                      </span>
-                      <span class="sr-only">3 out of 4</span>
-                    </span>
-
-                    <span class="plant-card__characteristic">
-                      Water
-                      <span class="plant-card__indicator" aria-hidden="true">
-                        ●●●○
-                      </span>
-                      <span class="sr-only">3 out of 4</span>
-                    </span>
-
-                    <span class="plant-card__characteristic">
-                      Care
-                      <span class="plant-card__indicator" aria-hidden="true">
-                        ●●○○
-                      </span>
-                      <span class="sr-only">2 out of 4</span>
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </li>
-
-            <li class="plant-slider__item">
-              <a href="./catalog.html" class="plant-card" aria-label="View Snake Plant in the catalog">
-                <div class="plant-card__image-wrap">
-                  <img src="/images/plants/snake-plant.jpg" alt="Snake Plant" class="plant-card__image" width="640" height="800" />
-                </div>
-
-                <div class="plant-card__body">
-                  <p class="plant-card__category">Easy Care</p>
-
-                  <h3 class="plant-card__name">Snake Plant</h3>
-
-                  <p class="plant-card__description">
-                    Nearly indestructible, thriving with little attention.
-                  </p>
-
-                  <p class="plant-card__price">$32</p>
-
-                  <div class="plant-card__characteristics">
-                    <span class="plant-card__characteristic">
-                      Light
-                      <span class="plant-card__indicator" aria-hidden="true">
-                        ●○○○
-                      </span>
-                      <span class="sr-only">1 out of 4</span>
-                    </span>
-
-                    <span class="plant-card__characteristic">
-                      Water
-                      <span class="plant-card__indicator" aria-hidden="true">
-                        ●○○○
-                      </span>
-                      <span class="sr-only">1 out of 4</span>
-                    </span>
-
-                    <span class="plant-card__characteristic">
-                      Care
-                      <span class="plant-card__indicator" aria-hidden="true">
-                        ●○○○
-                      </span>
-                      <span class="sr-only">1 out of 4</span>
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </li>
-
-            <li class="plant-slider__item">
-              <a href="./catalog.html" class="plant-card" aria-label="View Pilea Peperomioides in the catalog">
-                <div class="plant-card__image-wrap">
-                  <img src="/images/plants/pilea-peperomioides.jpg" alt="Pilea Peperomioides" class="plant-card__image" width="640" height="800" />
-                </div>
-
-                <div class="plant-card__body">
-                  <p class="plant-card__category">Pet Friendly</p>
-
-                  <h3 class="plant-card__name">Pilea Peperomioides</h3>
-
-                  <p class="plant-card__description">
-                    Playful round leaves with a compact, sculptural shape.
-                  </p>
-
-                  <p class="plant-card__price">$26</p>
-
-                  <div class="plant-card__characteristics">
-                    <span class="plant-card__characteristic">
-                      Light
-                      <span class="plant-card__indicator" aria-hidden="true">
-                        ●●●○
-                      </span>
-                      <span class="sr-only">3 out of 4</span>
-                    </span>
-
-                    <span class="plant-card__characteristic">
-                      Water
-                      <span class="plant-card__indicator" aria-hidden="true">
-                        ●●○○
-                      </span>
-                      <span class="sr-only">2 out of 4</span>
-                    </span>
-
-                    <span class="plant-card__characteristic">
-                      Care
-                      <span class="plant-card__indicator" aria-hidden="true">
-                        ●●○○
-                      </span>
-                      <span class="sr-only">2 out of 4</span>
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul>
+          <div class="plant-slider__viewport">
+            <ul class="plant-slider__track" data-featured-track></ul>
+          </div>
 
           <div class="plant-slider__controls">
-            <button type="button" class="button button--secondary" aria-label="Previous plants">
+            <button type="button" class="button button--secondary" data-slider-prev aria-label="Previous plants">
               ←
             </button>
 
-            <button type="button" class="button button--secondary" aria-label="Next plants">
+            <button type="button" class="button button--secondary" data-slider-next aria-label="Next plants">
               →
             </button>
           </div>

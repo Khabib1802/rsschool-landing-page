@@ -5,6 +5,7 @@ import { initSubmissionNotice } from "./modules/submission-notice.js";
 import { loadPlants } from "./modules/api.js";
 import { initCatalog } from "./modules/catalog.js";
 import { initModal } from "./modules/modal.js";
+import { initSlider } from "./modules/slider.js";
 
 initTheme();
 initSubmissionNotice();
@@ -18,6 +19,7 @@ const init = async () => {
 
   initCatalog(plants);
   initModal(plants);
+  initSlider(plants);
 };
 
 init();
