@@ -143,6 +143,19 @@ const updateShowMoreButton = (button, visibleCount, totalCount) => {
 };
 
 /**
+ * @param {NodeListOf<Element>} buttons
+ * @param {Element} activeButton
+ */
+const setActiveCategoryButton = (buttons, activeButton) => {
+  buttons.forEach((button) => {
+    const isActive = button === activeButton;
+
+    button.classList.toggle("category-nav__item--active", isActive);
+    button.setAttribute("aria-current", String(isActive));
+  });
+};
+
+/**
  * @param {import("./api.js").Plant[]} plants
  */
 export const initCatalog = (plants) => {
@@ -168,11 +181,20 @@ export const initCatalog = (plants) => {
 
   updateCatalog();
 
+  const initiallyActiveButton = Array.from(categoryButtons).find((button) =>
+    button.classList.contains("category-nav__item--active"),
+  );
+
+  if (initiallyActiveButton) {
+    setActiveCategoryButton(categoryButtons, initiallyActiveButton);
+  }
+
   categoryButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const category = button.dataset.category ?? "all";
 
       currentPlants = filterPlants(plants, category);
+      setActiveCategoryButton(categoryButtons, button);
       resetPagination();
     });
   });
