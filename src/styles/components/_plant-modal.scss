@@ -1,6 +1,7 @@
 @use "../abstracts/breakpoints";
 
 .plant-modal {
+  margin: auto;
   width: min(100% - var(--space-32), 1000px);
   max-width: 1000px;
   max-height: calc(100vh - var(--space-32));
