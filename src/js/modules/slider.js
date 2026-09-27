@@ -105,10 +105,23 @@ export const initSlider = (plants) => {
   let currentIndex = 0;
   let slidesPerView = getSlidesPerView();
 
-  const updatePosition = () => {
-    const cardWidth = 100 / slidesPerView;
+  /**
+   * @returns {number}
+   */
+  const getSlideStep = () => {
+    const firstItem = track.firstElementChild;
 
-    track.style.transform = `translateX(-${currentIndex * cardWidth}%)`;
+    if (!(firstItem instanceof HTMLElement)) return 0;
+
+    const trackGap = Number.parseFloat(getComputedStyle(track).columnGap) || 0;
+
+    return firstItem.getBoundingClientRect().width + trackGap;
+  };
+
+  const updatePosition = () => {
+    const offset = currentIndex * getSlideStep();
+
+    track.style.transform = `translateX(-${offset}px)`;
   };
 
   const updateControls = () => {
