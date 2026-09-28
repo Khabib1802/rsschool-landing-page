@@ -20,13 +20,13 @@ The dev server runs at `http://127.0.0.1:3000/rsschool-landing-page/`.
 
 ## Scripts
 
-| Script                 | Description                     |
-| ---------------------- | ------------------------------- |
-| `npm run dev`          | Start the development server    |
-| `npm run build`        | Build the production bundle     |
-| `npm run preview`      | Preview the production build    |
+| Script                 | Description                      |
+| ---------------------- | -------------------------------- |
+| `npm run dev`          | Start the development server     |
+| `npm run build`        | Build the production bundle      |
+| `npm run preview`      | Preview the production build     |
 | `npm run format`       | Format the project with Prettier |
-| `npm run format:check` | Check formatting                |
+| `npm run format:check` | Check formatting                 |
 
 ## Project structure
 
