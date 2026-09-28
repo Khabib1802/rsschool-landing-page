@@ -1,5 +1,6 @@
 import { createElement } from "../utils/dom.js";
 import { getCategoryLabel } from "../constants.js";
+import { formatPrice } from "../modules/pricing.js";
 
 /**
  * @typedef {Object} PlantCardOptions
@@ -56,7 +57,7 @@ export const createPlantCard = (plant, options = {}) => {
 
   const price = createElement("p", {
     className: "plant-card__price",
-    text: `$${plant.pricing.base}`,
+    text: formatPrice(plant.pricing.base),
   });
 
   name.append(action);

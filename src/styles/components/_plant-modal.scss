@@ -1,16 +1,21 @@
 @use "../abstracts/breakpoints";
 
+$two-column-query: "(min-width: #{breakpoints.$breakpoint-tablet + 1px}) and (min-height: 36rem)";
+
 .plant-modal {
+  --plant-modal-max-height: min(100dvh - var(--space-32), 720px);
+
   margin: auto;
-  width: min(100% - var(--space-32), 1000px);
-  max-width: 1000px;
-  max-height: calc(100vh - var(--space-32));
+  width: min(100% - var(--space-32), 880px);
+  max-height: var(--plant-modal-max-height);
   padding: 0;
-  border: var(--border-subtle);
+  border: 0;
   border-radius: var(--radius-md);
   background-color: var(--color-surface);
   color: var(--color-text);
-  box-shadow: var(--shadow-overlay);
+  box-shadow:
+    0 0 0 1px var(--color-border),
+    var(--shadow-overlay);
   overflow: hidden;
 
   opacity: 0;
@@ -20,6 +25,12 @@
     transform var(--transition-normal),
     overlay var(--transition-normal) allow-discrete,
     display var(--transition-normal) allow-discrete;
+
+  @include breakpoints.above-tablet {
+    --plant-modal-max-height: min(100dvh - var(--space-64), 720px);
+
+    width: min(100% - var(--space-64), 880px);
+  }
 
   &[open] {
     opacity: 1;
@@ -53,16 +64,20 @@
 .plant-modal__content {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  max-height: calc(100vh - var(--space-32));
-  overflow-y: auto;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  max-height: var(--plant-modal-max-height);
+
+  @media #{$two-column-query} {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
 }
 
 .plant-modal__close {
   position: absolute;
   z-index: 1;
-  top: var(--space-16);
-  right: var(--space-16);
+  top: var(--space-12);
+  right: var(--space-12);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,25 +102,43 @@
 }
 
 .plant-modal__image-wrap {
-  min-height: 100%;
+  display: none;
+  min-height: 0;
   background-color: var(--color-bg);
+
+  @media #{$two-column-query} {
+    display: block;
+  }
 }
 
 .plant-modal__image {
   width: 100%;
   height: 100%;
-  min-height: 600px;
   object-fit: cover;
 }
 
 .plant-modal__body {
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   gap: var(--space-16);
-  padding: var(--space-48);
+  min-height: 0;
+  padding: var(--space-24) var(--space-24) 0;
+  overflow-y: auto;
+
+  @media #{$two-column-query} {
+    padding: var(--space-32) var(--space-32) 0;
+  }
 }
 
-.plant-modal__category {
+.plant-modal__header {
+  display: grid;
+  gap: var(--space-4);
+  padding-right: var(--space-32);
+}
+
+.plant-modal__category,
+.plant-modal__option-label {
   font-size: var(--font-size-small);
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -113,27 +146,25 @@
 }
 
 .plant-modal__name {
-  max-width: 12ch;
+  font-size: var(--font-size-h3);
 }
 
 .plant-modal__description {
-  max-width: 48ch;
   color: var(--color-text-muted);
 }
 
 .plant-modal__characteristics {
   display: grid;
-  gap: var(--space-12);
-  padding: var(--space-16) 0;
-  border-top: var(--border-subtle);
-  border-bottom: var(--border-subtle);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-16);
+  padding-block: var(--space-16);
+  border-block: var(--border-subtle);
 }
 
 .characteristic {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-16);
+  display: grid;
+  justify-items: start;
+  gap: var(--space-8);
 }
 
 .characteristic__label {
@@ -145,7 +176,7 @@
 
 .characteristic__value {
   display: flex;
-  gap: var(--space-8);
+  gap: var(--space-4);
 }
 
 .characteristic__indicator {
@@ -161,39 +192,37 @@
 
 .plant-modal__options {
   display: grid;
-  gap: var(--space-24);
+  gap: var(--space-16);
 }
 
 .plant-modal__option {
+  display: grid;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.plant-modal__choices {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-8);
-  border: 0;
 }
 
-.plant-modal__option legend {
-  width: 100%;
-  margin-bottom: var(--space-8);
-  font-size: var(--font-size-small);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--color-text-muted);
-}
-
-.plant-modal__option label {
+.plant-modal__choice {
+  position: relative;
   cursor: pointer;
 }
 
-.plant-modal__option input {
+.plant-modal__choice-input {
   position: absolute;
   width: 1px;
   height: 1px;
+  margin: 0;
   opacity: 0;
 }
 
-.plant-modal__option label span {
+.plant-modal__choice-label {
   display: block;
-  padding: var(--space-8) var(--space-16);
+  padding: var(--space-8) var(--space-12);
   border: var(--border-subtle);
   border-radius: var(--radius-sm);
   font-size: var(--font-size-small);
@@ -203,36 +232,22 @@
     border-color var(--transition-fast);
 }
 
-.plant-modal__option label:hover span {
+.plant-modal__choice:hover .plant-modal__choice-label {
   border-color: var(--color-primary);
 }
 
-.plant-modal__option input:checked + span {
+.plant-modal__choice-input:checked + .plant-modal__choice-label {
   border-color: var(--color-primary);
   background-color: var(--color-primary);
   color: var(--color-surface);
 }
 
-.plant-modal__option input:focus-visible + span {
+.plant-modal__choice-input:focus-visible + .plant-modal__choice-label {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-.plant-modal__quantity {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-16);
-}
-
-.plant-modal__quantity label {
-  font-size: var(--font-size-small);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--color-text-muted);
-}
-
-.plant-modal__quantity input {
+.plant-modal__quantity-input {
   width: 80px;
   padding: var(--space-8) var(--space-12);
   border: var(--border-subtle);
@@ -247,45 +262,33 @@
   }
 }
 
-.plant-modal__price {
+.plant-modal__footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
   margin-top: auto;
+  padding-block: var(--space-16) var(--space-24);
+  border-top: var(--border-subtle);
+  background-color: var(--color-surface);
+
+  @media #{$two-column-query} {
+    padding-bottom: var(--space-32);
+  }
+}
+
+.plant-modal__price {
   font-size: var(--font-size-h3);
   font-family: var(--font-serif);
   color: var(--color-primary);
 }
 
-.plant-modal__body > .button {
-  align-self: flex-start;
-}
-
-@include breakpoints.below-tablet {
-  .plant-modal {
-    width: calc(100% - var(--space-16));
-    max-height: calc(100vh - var(--space-16));
-  }
-
-  .plant-modal__content {
-    grid-template-columns: 1fr;
-    max-height: calc(100vh - var(--space-16));
-  }
-
-  .plant-modal__image {
-    min-height: 0;
-    aspect-ratio: 4 / 5;
-  }
-
-  .plant-modal__body {
-    padding: var(--space-32);
-  }
-
-  .plant-modal__name {
-    max-width: none;
-  }
-}
-
-@include breakpoints.below-tablet {
-  .plant-modal__close {
-    top: var(--space-12);
-    right: var(--space-12);
+@container (min-width: 24rem) {
+  .plant-modal__option {
+    grid-template-columns: var(--space-80) 1fr;
+    gap: var(--space-16);
   }
 }

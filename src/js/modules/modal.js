@@ -1,212 +1,135 @@
-import { calculateUnitPrice, calculateTotalPrice } from "./pricing.js";
-import { getCategoryLabel } from "../constants.js";
-import { createPlantModal } from "../components/plant-modal-template.js";
+import { MAX_QUANTITY } from "../constants.js";
+import {
+  createPlantModal,
+  fillPlantDetails,
+} from "../components/plant-modal.js";
+import {
+  calculateTotalPrice,
+  calculateUnitPrice,
+  formatPrice,
+} from "./pricing.js";
 import { lockScroll, unlockScroll } from "../utils/scroll-lock.js";
 import { waitForTransitionEnd } from "../utils/motion.js";
 
 /**
  * @typedef {import("../types.js").Plant} Plant
+ * @typedef {{ plant: Plant, size: string, pot: string, quantity: number }} ModalState
  */
 
 /**
- * @param {HTMLDialogElement} modal
+ * @param {Record<string, number>} record
+ * @returns {string}
+ */
+const firstKey = (record) => Object.keys(record)[0];
+
+/**
  * @param {Plant} plant
+ * @returns {ModalState}
  */
-const renderPlant = (modal, plant) => {
-  const image = modal.querySelector("[data-modal-image]");
-  const category = modal.querySelector("[data-modal-category]");
-  const name = modal.querySelector("[data-modal-name]");
-  const description = modal.querySelector("[data-modal-description]");
-
-  if (image instanceof HTMLImageElement) {
-    image.src = plant.image;
-    image.alt = plant.name;
-  }
-
-  if (category) {
-    category.textContent = plant.categories.map(getCategoryLabel).join(" · ");
-  }
-
-  if (name) {
-    name.textContent = plant.name;
-  }
-
-  if (description) {
-    description.textContent = plant.description;
-  }
-
-  renderCharacteristics(modal, plant);
-};
+const createInitialState = (plant) => ({
+  plant,
+  size: firstKey(plant.pricing.sizes),
+  pot: firstKey(plant.pricing.pots),
+  quantity: 1,
+});
 
 /**
- * @param {HTMLDialogElement} modal
+ * @param {string} value
+ * @returns {number | null}
  */
-const closeModal = (modal) => {
-  modal.close();
-};
+const parseQuantity = (value) => {
+  const quantity = Number.parseInt(value, 10);
 
-/**
- * @param {HTMLDialogElement} modal
- * @param {import("../types.js").Plant} plant
- */
-const renderCharacteristics = (modal, plant) => {
-  const characteristics = ["light", "water", "care"];
+  if (Number.isNaN(quantity)) return null;
 
-  characteristics.forEach((characteristic) => {
-    const value = plant.characteristics[characteristic];
-
-    const element = modal.querySelector(
-      `[data-characteristic-value="${characteristic}"]`,
-    );
-
-    if (!element) return;
-
-    element.replaceChildren();
-
-    for (let index = 1; index <= 4; index += 1) {
-      const indicator = document.createElement("span");
-
-      indicator.className = "characteristic__indicator";
-
-      if (index <= value) {
-        indicator.classList.add("characteristic__indicator--active");
-      }
-
-      element.append(indicator);
-    }
-  });
-};
-
-/**
- * @param {HTMLDialogElement} modal
- * @param {import("../types.js").Plant} plant
- * @param {"small" | "medium" | "large"} size
- * @param {"none" | "ceramic" | "stone"} pot
- * @param {number} quantity
- */
-const updatePrice = (modal, plant, size, pot, quantity) => {
-  const priceElement = modal.querySelector("[data-modal-price]");
-
-  if (!priceElement) return;
-
-  const unitPrice = calculateUnitPrice(plant, size, pot);
-  const totalPrice = calculateTotalPrice(unitPrice, quantity);
-
-  priceElement.textContent = `$${totalPrice}`;
-};
-
-/**
- * @param {HTMLDialogElement} modal
- */
-const resetOptions = (modal) => {
-  const smallSize = modal.querySelector('[data-modal-size][value="small"]');
-
-  const noPot = modal.querySelector('[data-modal-pot][value="none"]');
-
-  const quantityInput = modal.querySelector("[data-modal-quantity]");
-
-  if (smallSize instanceof HTMLInputElement) {
-    smallSize.checked = true;
-  }
-
-  if (noPot instanceof HTMLInputElement) {
-    noPot.checked = true;
-  }
-
-  if (quantityInput instanceof HTMLInputElement) {
-    quantityInput.value = "1";
-  }
+  return Math.min(Math.max(quantity, 1), MAX_QUANTITY);
 };
 
 /**
  * @returns {(plant: Plant) => void}
  */
 const createModalController = () => {
-  const modal = createPlantModal();
+  const { dialog, elements } = createPlantModal();
 
-  document.body.append(modal);
+  document.body.append(dialog);
 
-  let currentPlant = null;
+  let state = /** @type {ModalState | null} */ (null);
+  let pressStartedOnBackdrop = false;
 
-  let selectedSize = "small";
-  let selectedPot = "none";
-  let quantity = 1;
+  const render = () => {
+    if (!state) return;
 
-  const sizeInputs = modal.querySelectorAll("[data-modal-size]");
-  const potInputs = modal.querySelectorAll("[data-modal-pot]");
-  const quantityInput = modal.querySelector("[data-modal-quantity]");
+    const { plant, size, pot, quantity } = state;
 
-  sizeInputs.forEach((input) => {
-    input.addEventListener("change", () => {
-      if (!(input instanceof HTMLInputElement)) return;
-      if (!currentPlant) return;
+    elements.options
+      .querySelectorAll("input[data-option]")
+      .forEach((input) => {
+        if (!(input instanceof HTMLInputElement)) return;
 
-      selectedSize = input.value;
+        input.checked = input.value === state[input.dataset.option];
+      });
 
-      updatePrice(modal, currentPlant, selectedSize, selectedPot, quantity);
-    });
-  });
-
-  potInputs.forEach((input) => {
-    input.addEventListener("change", () => {
-      if (!(input instanceof HTMLInputElement)) return;
-      if (!currentPlant) return;
-
-      selectedPot = input.value;
-
-      updatePrice(modal, currentPlant, selectedSize, selectedPot, quantity);
-    });
-  });
-
-  quantityInput?.addEventListener("input", () => {
-    if (!(quantityInput instanceof HTMLInputElement)) return;
-    if (!currentPlant) return;
-
-    const value = Number.parseInt(quantityInput.value, 10);
-
-    quantity = Number.isNaN(value) || value < 1 ? 1 : value;
-
-    quantityInput.value = String(quantity);
-
-    updatePrice(modal, currentPlant, selectedSize, selectedPot, quantity);
-  });
-
-  const closeButton = modal.querySelector("[data-modal-close]");
-  const submitButton = modal.querySelector("[data-modal-submit]");
-
-  closeButton?.addEventListener("click", () => {
-    closeModal(modal);
-  });
-
-  submitButton?.addEventListener("click", () => {
-    closeModal(modal);
-  });
-
-  modal.addEventListener("click", (event) => {
-    if (event.target === modal) {
-      closeModal(modal);
+    if (Number(elements.quantityInput.value) !== quantity) {
+      elements.quantityInput.value = String(quantity);
     }
+
+    elements.price.textContent = formatPrice(
+      calculateTotalPrice(calculateUnitPrice(plant, size, pot), quantity),
+    );
+  };
+
+  elements.options.addEventListener("change", (event) => {
+    const input = event.target;
+
+    if (!state || !(input instanceof HTMLInputElement)) return;
+
+    const option = input.dataset.option;
+
+    if (!option) return;
+
+    state[option] = input.value;
+    render();
   });
 
-  modal.addEventListener("close", async () => {
-    await waitForTransitionEnd(modal);
+  elements.quantityInput.addEventListener("input", () => {
+    const quantity = parseQuantity(elements.quantityInput.value);
+
+    if (!state || quantity === null) return;
+
+    state.quantity = quantity;
+    render();
+  });
+
+  elements.quantityInput.addEventListener("change", render);
+
+  elements.close.addEventListener("click", () => dialog.close());
+  elements.submit.addEventListener("click", () => dialog.close());
+
+  dialog.addEventListener("pointerdown", (event) => {
+    pressStartedOnBackdrop = event.target === dialog;
+  });
+
+  dialog.addEventListener("pointerup", (event) => {
+    if (pressStartedOnBackdrop && event.target === dialog) {
+      dialog.close();
+    }
+
+    pressStartedOnBackdrop = false;
+  });
+
+  dialog.addEventListener("close", async () => {
+    await waitForTransitionEnd(dialog);
     unlockScroll();
   });
 
   return (plant) => {
-    currentPlant = plant;
+    state = createInitialState(plant);
 
-    selectedSize = "small";
-    selectedPot = "none";
-    quantity = 1;
-
-    resetOptions(modal);
-    renderPlant(modal, plant);
-
-    updatePrice(modal, plant, selectedSize, selectedPot, quantity);
+    fillPlantDetails(elements, plant);
+    render();
 
     lockScroll();
-    modal.showModal();
+    dialog.showModal();
   };
 };
 

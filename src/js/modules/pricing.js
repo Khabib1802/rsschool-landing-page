@@ -18,3 +18,9 @@ export const calculateUnitPrice = (plant, size, pot) => {
 export const calculateTotalPrice = (unitPrice, quantity) => {
   return unitPrice * quantity;
 };
+
+/**
+ * @param {number} value
+ * @returns {string}
+ */
+export const formatPrice = (value) => `$${value}`;

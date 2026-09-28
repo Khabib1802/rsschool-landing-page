@@ -22,6 +22,31 @@ export const SPACE_LABELS = {
 export const getCategoryLabel = (category) =>
   CATEGORY_LABELS[category] ?? category;
 
+export const CHARACTERISTIC_LABELS = {
+  light: "Light",
+  water: "Water",
+  care: "Care",
+};
+
+export const CHARACTERISTIC_MAX = 4;
+
+export const MAX_QUANTITY = 99;
+
+export const PLANT_OPTIONS = [
+  {
+    key: "size",
+    title: "Size",
+    pricingKey: "sizes",
+    labels: { small: "Small", medium: "Medium", large: "Large" },
+  },
+  {
+    key: "pot",
+    title: "Pot",
+    pricingKey: "pots",
+    labels: { none: "None", ceramic: "Ceramic", stone: "Stone" },
+  },
+];
+
 export const BREAKPOINTS = {
   mobile: 768,
   desktop: 1200,
