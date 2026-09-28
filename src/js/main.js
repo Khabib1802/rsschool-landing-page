@@ -1,6 +1,7 @@
 import "../styles/main.scss";
 
 import { initTheme } from "./modules/theme.js";
+import { initBurgerMenu } from "./modules/burger.js";
 import { initSubmissionNotice } from "./modules/submission-notice.js";
 import { loadPlants } from "./modules/api.js";
 import { initCatalog } from "./modules/catalog.js";
@@ -8,6 +9,7 @@ import { initModal } from "./modules/modal.js";
 import { initSlider } from "./modules/slider.js";
 
 initTheme();
+initBurgerMenu();
 initSubmissionNotice();
 
 const init = async () => {

@@ -1,5 +1,6 @@
 .header {
   position: relative;
+  z-index: 30;
   border-bottom: var(--border-subtle);
   background-color: var(--color-surface);
 }
