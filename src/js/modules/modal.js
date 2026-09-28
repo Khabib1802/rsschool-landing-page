@@ -119,9 +119,9 @@ const resetOptions = (modal) => {
 };
 
 /**
- * @param {import("../types.js").Plant[]} plants
+ * @returns {(plant: Plant) => void}
  */
-export const initModal = (plants) => {
+const createModalController = () => {
   const modal = createPlantModal();
 
   document.body.append(modal);
@@ -172,46 +172,13 @@ export const initModal = (plants) => {
   });
 
   const closeButton = modal.querySelector("[data-modal-close]");
-
-  document.addEventListener("click", (event) => {
-    if (!(event.target instanceof Element)) {
-      return;
-    }
-
-    const card = event.target.closest("[data-plant-id]");
-
-    if (!card) {
-      return;
-    }
-
-    const plantId = card.dataset.plantId;
-
-    if (!plantId) {
-      return;
-    }
-
-    const plant = plants.find((item) => item.id === plantId);
-
-    if (!plant) {
-      return;
-    }
-
-    currentPlant = plant;
-
-    selectedSize = "small";
-    selectedPot = "none";
-    quantity = 1;
-
-    resetOptions(modal);
-    renderPlant(modal, plant);
-
-    updatePrice(modal, plant, selectedSize, selectedPot, quantity);
-
-    lockScroll();
-    modal.showModal();
-  });
+  const submitButton = modal.querySelector("[data-modal-submit]");
 
   closeButton?.addEventListener("click", () => {
+    closeModal(modal);
+  });
+
+  submitButton?.addEventListener("click", () => {
     closeModal(modal);
   });
 
@@ -226,9 +193,41 @@ export const initModal = (plants) => {
     unlockScroll();
   });
 
-  const submitButton = modal.querySelector("[data-modal-submit]");
+  return (plant) => {
+    currentPlant = plant;
 
-  submitButton?.addEventListener("click", () => {
-    closeModal(modal);
+    selectedSize = "small";
+    selectedPot = "none";
+    quantity = 1;
+
+    resetOptions(modal);
+    renderPlant(modal, plant);
+
+    updatePrice(modal, plant, selectedSize, selectedPot, quantity);
+
+    lockScroll();
+    modal.showModal();
+  };
+};
+
+/**
+ * @param {Plant[]} plants
+ */
+export const initModal = (plants) => {
+  let openPlant = null;
+
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+
+    const card = event.target.closest("[data-plant-id]");
+
+    if (!(card instanceof HTMLElement)) return;
+
+    const plant = plants.find((item) => item.id === card.dataset.plantId);
+
+    if (!plant) return;
+
+    openPlant ??= createModalController();
+    openPlant(plant);
   });
 };

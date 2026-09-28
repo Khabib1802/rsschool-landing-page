@@ -7,19 +7,25 @@ import { initCatalog } from "./modules/catalog.js";
 import { initModal } from "./modules/modal.js";
 import { initSlider } from "./modules/slider.js";
 
+const PAGE_MODULES = {
+  home: [initSlider, initModal],
+  catalog: [initCatalog, initModal],
+  journal: [],
+};
+
 initTheme();
 initBurgerMenu();
 
 const init = async () => {
+  const modules = PAGE_MODULES[document.body.dataset.page] ?? [];
+
+  if (modules.length === 0) return;
+
   const plants = await loadPlants();
 
-  if (plants.length === 0) {
-    return;
-  }
+  if (plants.length === 0) return;
 
-  initCatalog(plants);
-  initModal(plants);
-  initSlider(plants);
+  modules.forEach((initModule) => initModule(plants));
 };
 
 init();

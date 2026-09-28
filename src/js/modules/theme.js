@@ -1,3 +1,5 @@
+import { readStorage, writeStorage } from "../utils/storage.js";
+
 const THEMES = { LIGHT: "light", DARK: "dark" };
 const STORAGE_KEY = "moss-theme";
 
@@ -10,7 +12,7 @@ const applyTheme = (theme) => {
 };
 
 const getPreferredTheme = () => {
-  const saved = localStorage.getItem(STORAGE_KEY);
+  const saved = readStorage(STORAGE_KEY);
   const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   return isValidTheme(saved) ? saved : systemDark ? THEMES.DARK : THEMES.LIGHT;
 };
@@ -18,7 +20,7 @@ const getPreferredTheme = () => {
 const setTheme = (theme) => {
   if (!isValidTheme(theme)) return;
   applyTheme(theme);
-  localStorage.setItem(STORAGE_KEY, theme);
+  writeStorage(STORAGE_KEY, theme);
 };
 
 const toggleTheme = () => {

@@ -23,7 +23,14 @@
 
     <script>
       (() => {
-        const saved = localStorage.getItem("moss-theme");
+        let saved = null;
+
+        try {
+          saved = localStorage.getItem("moss-theme");
+        } catch {
+          saved = null;
+        }
+
         const systemDark = window.matchMedia(
           "(prefers-color-scheme: dark)",
         ).matches;
@@ -48,7 +55,7 @@
     />
   </head>
 
-  <body>
+  <body data-page="journal">
     <header class="header">
       <div class="header__inner container">
         <a href="./" class="logo">MOSS</a>
