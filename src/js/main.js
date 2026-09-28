@@ -3,29 +3,45 @@ import "../styles/main.scss";
 import { initTheme } from "./modules/theme.js";
 import { initBurgerMenu } from "./modules/burger.js";
 import { loadPlants } from "./modules/api.js";
-import { initCatalog } from "./modules/catalog.js";
+import { initCatalog, showCatalogError } from "./modules/catalog.js";
 import { initModal } from "./modules/modal.js";
 import { initSlider } from "./modules/slider.js";
-
-const PAGE_MODULES = {
-  home: [initSlider, initModal],
-  catalog: [initCatalog, initModal],
-  journal: [],
-};
 
 initTheme();
 initBurgerMenu();
 
-const init = async () => {
-  const modules = PAGE_MODULES[document.body.dataset.page] ?? [];
+const fetchPlants = async (onError) => {
+  try {
+    return await loadPlants();
+  } catch (error) {
+    console.error("Unable to load plant data:", error);
+    onError?.();
 
-  if (modules.length === 0) return;
-
-  const plants = await loadPlants();
-
-  if (plants.length === 0) return;
-
-  modules.forEach((initModule) => initModule(plants));
+    return null;
+  }
 };
 
-init();
+const initHomePage = async () => {
+  const plants = await fetchPlants();
+
+  if (!plants) return;
+
+  initSlider(plants);
+  initModal(plants);
+};
+
+const initCatalogPage = async () => {
+  const plants = await fetchPlants(() => showCatalogError(initCatalogPage));
+
+  if (!plants) return;
+
+  initCatalog(plants);
+  initModal(plants);
+};
+
+const PAGE_INITIALIZERS = {
+  home: initHomePage,
+  catalog: initCatalogPage,
+};
+
+PAGE_INITIALIZERS[document.body.dataset.page]?.();

@@ -4,13 +4,84 @@
   padding-block: var(--space-48) var(--space-32);
 }
 
-.catalog-categories {
-  padding-bottom: var(--space-32);
+.catalog-filters {
+  padding-bottom: var(--space-24);
+}
+
+.catalog-filters__inner {
+  display: grid;
+  gap: var(--space-16);
+}
+
+.filter-group {
+  display: grid;
+  gap: var(--space-4);
+
+  @include breakpoints.above-tablet {
+    grid-template-columns: var(--space-96) 1fr;
+    align-items: center;
+    gap: var(--space-16);
+  }
+}
+
+.filter-group__label {
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.catalog-results {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding-bottom: var(--space-24);
+}
+
+.catalog-results__count {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+.catalog-results__clear {
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--color-text);
+  }
+}
+
+.catalog-message {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-16);
+  padding: var(--space-48) var(--space-24);
+  border: var(--border-subtle);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+
+  @include breakpoints.above-tablet {
+    padding: var(--space-64) var(--space-48);
+  }
+}
+
+.catalog-message__title {
+  font-size: var(--font-size-h3);
+}
+
+.catalog-message__text {
+  max-width: 48ch;
+  color: var(--color-text-muted);
 }
 
 .product-grid {
-  --catalog-page-size: 3;
-
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-48) var(--space-24);
@@ -18,14 +89,10 @@
   list-style: none;
 
   @include breakpoints.above-tablet {
-    --catalog-page-size: 6;
-
     grid-template-columns: repeat(2, 1fr);
   }
 
   @include breakpoints.above-desktop {
-    --catalog-page-size: 9;
-
     grid-template-columns: repeat(3, 1fr);
   }
 }

@@ -123,70 +123,54 @@
         </div>
       </section>
 
-      <!-- Categories -->
-      <div class="catalog-categories">
-        <div class="container">
-          <nav
-            class="category-nav"
-            aria-label="Filter by category"
-            data-category-filter
-          >
-            <button
-              type="button"
-              class="category-nav__item category-nav__item--active"
-              data-category="all"
-            >
-              All
-            </button>
+      <!-- Filters -->
+      <div class="catalog-filters" data-catalog-filters hidden>
+        <div class="container catalog-filters__inner">
+          <div class="filter-group">
+            <p class="filter-group__label" id="category-filter-label">
+              Category
+            </p>
 
-            <button
-              type="button"
-              class="category-nav__item"
-              data-category="easy-care"
-            >
-              Easy Care
-            </button>
+            <nav
+              class="category-nav"
+              aria-labelledby="category-filter-label"
+              data-filter="category"
+            ></nav>
+          </div>
 
-            <button
-              type="button"
-              class="category-nav__item"
-              data-category="low-light"
-            >
-              Low Light
-            </button>
+          <div class="filter-group">
+            <p class="filter-group__label" id="space-filter-label">Room</p>
 
-            <button
-              type="button"
-              class="category-nav__item"
-              data-category="pet-friendly"
-            >
-              Pet Friendly
-            </button>
-
-            <button
-              type="button"
-              class="category-nav__item"
-              data-category="tropical"
-            >
-              Tropical
-            </button>
-
-            <button
-              type="button"
-              class="category-nav__item"
-              data-category="succulent"
-            >
-              Succulents
-            </button>
-          </nav>
+            <nav
+              class="category-nav"
+              aria-labelledby="space-filter-label"
+              data-filter="space"
+            ></nav>
+          </div>
         </div>
       </div>
 
       <!-- Product grid -->
       <section class="catalog-grid">
         <div class="container">
+          <div class="catalog-results" data-catalog-results hidden>
+            <p class="catalog-results__count" data-catalog-count></p>
+
+            <button
+              type="button"
+              class="catalog-results__clear"
+              data-clear-filters
+              hidden
+            >
+              Clear filters
+            </button>
+          </div>
+
+          <div class="catalog-message" data-catalog-message hidden></div>
+
           <ul class="product-grid" data-plant-grid></ul>
-          <div class="catalog-show-more">
+
+          <div class="catalog-show-more" data-show-more-wrap hidden>
             <button
               type="button"
               class="button button--secondary"

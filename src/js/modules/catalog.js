@@ -1,35 +1,98 @@
-import { MEDIA_QUERIES } from "../constants.js";
+import {
+  CATEGORY_LABELS,
+  MEDIA_QUERIES,
+  SPACE_LABELS,
+  getPageSize,
+} from "../constants.js";
 import { createPlantCard } from "../components/plant-card.js";
+import { initFilterGroup } from "../components/filter-group.js";
+import {
+  clearCatalogMessage,
+  renderCatalogMessage,
+} from "../components/catalog-message.js";
 import { getTransitionTimeMs } from "../utils/motion.js";
 
-const ACTIVE_CATEGORY_CLASS = "category-nav__item--active";
+const ALL = "all";
 const GRID_LEAVING_CLASS = "product-grid--leaving";
 const CARD_ENTERING_CLASS = "is-entering";
 
 /**
- * @param {import("../types.js").Plant[]} plants
- * @param {string} category "all" or a category id
- * @returns {import("../types.js").Plant[]}
+ * @typedef {import("../types.js").Plant} Plant
+ * @typedef {{ category: string, space: string }} Filters
  */
-const filterPlants = (plants, category) => {
-  if (category === "all") {
-    return plants;
-  }
 
-  return plants.filter((plant) => plant.categories.includes(category));
+/**
+ * @param {Record<string, string>} labels
+ * @returns {{ value: string, label: string }[]}
+ */
+const toOptions = (labels) => [
+  { value: ALL, label: "All" },
+  ...Object.entries(labels).map(([value, label]) => ({ value, label })),
+];
+
+/**
+ * @param {string | null} value
+ * @param {Record<string, string>} labels
+ * @returns {string}
+ */
+const pickKnown = (value, labels) =>
+  value !== null && Object.hasOwn(labels, value) ? value : ALL;
+
+/**
+ * @returns {Filters}
+ */
+const readFilters = () => {
+  const params = new URLSearchParams(window.location.search);
+
+  return {
+    category: pickKnown(params.get("category"), CATEGORY_LABELS),
+    space: pickKnown(params.get("space"), SPACE_LABELS),
+  };
 };
 
 /**
- * @param {HTMLElement} grid
- * @returns {number}
+ * @param {Filters} filters
  */
-const getPageSize = (grid) => {
-  const value = getComputedStyle(grid)
-    .getPropertyValue("--catalog-page-size")
-    .trim();
+const writeFilters = (filters) => {
+  const url = new URL(window.location.href);
 
-  return Number.parseInt(value, 10);
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value === ALL) {
+      url.searchParams.delete(key);
+    } else {
+      url.searchParams.set(key, value);
+    }
+  });
+
+  window.history.replaceState(null, "", url);
 };
+
+/**
+ * @param {Filters} filters
+ * @returns {boolean}
+ */
+const hasActiveFilters = ({ category, space }) =>
+  category !== ALL || space !== ALL;
+
+/**
+ * @param {Filters} first
+ * @param {Filters} second
+ * @returns {boolean}
+ */
+const isSameFilters = (first, second) =>
+  first.category === second.category && first.space === second.space;
+
+/**
+ * @param {Plant[]} plants
+ * @param {Filters} filters
+ * @returns {Plant[]}
+ */
+const filterPlants = (plants, { category, space }) =>
+  plants.filter(
+    (plant) =>
+      (category === ALL || plant.categories.includes(category)) &&
+      (space === ALL || plant.spaces.includes(space)),
+  );
 
 /**
  * @param {HTMLElement} card
@@ -67,7 +130,7 @@ const updateVisibleCards = (cards, visibleCount) => {
 };
 
 /**
- * @param {import("../types.js").Plant[]} plants
+ * @param {Plant[]} plants
  * @returns {HTMLElement[]}
  */
 const createCards = (plants) =>
@@ -80,59 +143,113 @@ const createCards = (plants) =>
   });
 
 /**
- * @param {HTMLElement | null} button
- * @param {number} visibleCount
- * @param {number} totalCount
+ * @param {() => void} onRetry
  */
-const updateShowMoreButton = (button, visibleCount, totalCount) => {
-  if (!button) return;
+export const showCatalogError = (onRetry) => {
+  const message = document.querySelector("[data-catalog-message]");
 
-  button.style.display = visibleCount >= totalCount ? "none" : "";
-};
+  if (!(message instanceof HTMLElement)) return;
 
-/**
- * @param {NodeListOf<Element>} buttons
- * @param {Element} activeButton
- */
-const setActiveCategoryButton = (buttons, activeButton) => {
-  buttons.forEach((button) => {
-    const isActive = button === activeButton;
-
-    button.classList.toggle(ACTIVE_CATEGORY_CLASS, isActive);
-    button.setAttribute("aria-current", String(isActive));
+  renderCatalogMessage(message, {
+    role: "alert",
+    title: "We couldn't load the plants",
+    text: "Check your connection and try again.",
+    actionLabel: "Try again",
+    onAction: onRetry,
   });
 };
 
 /**
- * @param {import("../types.js").Plant[]} plants
+ * @param {Plant[]} plants
  */
 export const initCatalog = (plants) => {
   const grid = document.querySelector("[data-plant-grid]");
-
-  if (!(grid instanceof HTMLElement)) return;
-
-  const categoryButtons = document.querySelectorAll("[data-category]");
+  const categoryContainer = document.querySelector('[data-filter="category"]');
+  const spaceContainer = document.querySelector('[data-filter="space"]');
+  const filtersBlock = document.querySelector("[data-catalog-filters]");
+  const results = document.querySelector("[data-catalog-results]");
+  const count = document.querySelector("[data-catalog-count]");
+  const clearButton = document.querySelector("[data-clear-filters]");
+  const message = document.querySelector("[data-catalog-message]");
+  const showMoreWrap = document.querySelector("[data-show-more-wrap]");
   const showMoreButton = document.querySelector("[data-show-more]");
 
-  let activeCategory = "all";
-  let currentPlants = plants;
+  if (
+    !(grid instanceof HTMLElement) ||
+    !(categoryContainer instanceof HTMLElement) ||
+    !(spaceContainer instanceof HTMLElement) ||
+    !(filtersBlock instanceof HTMLElement) ||
+    !(results instanceof HTMLElement) ||
+    !(count instanceof HTMLElement) ||
+    !(clearButton instanceof HTMLElement) ||
+    !(message instanceof HTMLElement) ||
+    !(showMoreWrap instanceof HTMLElement) ||
+    !(showMoreButton instanceof HTMLElement)
+  ) {
+    return;
+  }
+
+  let filters = readFilters();
+  let currentPlants = filterPlants(plants, filters);
   let cards = /** @type {HTMLElement[]} */ ([]);
-  let visibleCount = getPageSize(grid);
+  let visibleCount = getPageSize();
   let swapTimer = 0;
 
-  const refreshShowMore = () =>
-    updateShowMoreButton(showMoreButton, visibleCount, cards.length);
+  const setCategoryActive = initFilterGroup(
+    categoryContainer,
+    toOptions(CATEGORY_LABELS),
+    (category) => applyFilters({ ...filters, category }),
+  );
+
+  const setSpaceActive = initFilterGroup(
+    spaceContainer,
+    toOptions(SPACE_LABELS),
+    (space) => applyFilters({ ...filters, space }),
+  );
+
+  const resetFilters = () => applyFilters({ category: ALL, space: ALL });
+
+  const refreshResults = () => {
+    const total = currentPlants.length;
+
+    count.textContent = `${total} ${total === 1 ? "plant" : "plants"}`;
+    clearButton.hidden = !hasActiveFilters(filters);
+    showMoreWrap.hidden = visibleCount >= total;
+
+    if (total === 0) {
+      renderCatalogMessage(message, {
+        role: "status",
+        title: "No plants match these filters",
+        text: "Try another category or room to see more plants.",
+        actionLabel: "Clear filters",
+        onAction: resetFilters,
+      });
+    } else {
+      clearCatalogMessage(message);
+    }
+  };
 
   const rebuildCards = () => {
     cards = createCards(currentPlants);
     grid.replaceChildren(...cards);
 
     updateVisibleCards(cards, visibleCount);
-    refreshShowMore();
+    refreshResults();
   };
 
-  const showCategory = () => {
-    visibleCount = getPageSize(grid);
+  /**
+   * @param {Filters} nextFilters
+   */
+  const applyFilters = (nextFilters) => {
+    if (isSameFilters(filters, nextFilters)) return;
+
+    filters = nextFilters;
+    currentPlants = filterPlants(plants, filters);
+    visibleCount = getPageSize();
+
+    writeFilters(filters);
+    setCategoryActive(filters.category);
+    setSpaceActive(filters.space);
 
     window.clearTimeout(swapTimer);
     grid.classList.add(GRID_LEAVING_CLASS);
@@ -144,43 +261,28 @@ export const initCatalog = (plants) => {
   };
 
   const resetPagination = () => {
-    visibleCount = getPageSize(grid);
+    visibleCount = getPageSize();
 
     updateVisibleCards(cards, visibleCount);
-    refreshShowMore();
+    refreshResults();
   };
 
+  setCategoryActive(filters.category);
+  setSpaceActive(filters.space);
   rebuildCards();
 
-  const initiallyActiveButton = Array.from(categoryButtons).find((button) =>
-    button.classList.contains(ACTIVE_CATEGORY_CLASS),
-  );
+  filtersBlock.hidden = false;
+  results.hidden = false;
 
-  if (initiallyActiveButton) {
-    setActiveCategoryButton(categoryButtons, initiallyActiveButton);
-  }
+  clearButton.addEventListener("click", resetFilters);
 
-  categoryButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const category = button.dataset.category ?? "all";
-
-      if (category === activeCategory) return;
-
-      activeCategory = category;
-      currentPlants = filterPlants(plants, category);
-
-      setActiveCategoryButton(categoryButtons, button);
-      showCategory();
-    });
-  });
-
-  showMoreButton?.addEventListener("click", () => {
+  showMoreButton.addEventListener("click", () => {
     if (grid.classList.contains(GRID_LEAVING_CLASS)) return;
 
-    visibleCount += getPageSize(grid);
+    visibleCount += getPageSize();
 
     updateVisibleCards(cards, visibleCount);
-    refreshShowMore();
+    refreshResults();
   });
 
   Object.values(MEDIA_QUERIES).forEach((query) => {
