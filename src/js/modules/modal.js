@@ -2,6 +2,7 @@ import { calculateUnitPrice, calculateTotalPrice } from "./pricing.js";
 import { getCategoryLabel } from "../constants.js";
 import { createPlantModal } from "../components/plant-modal-template.js";
 import { lockScroll, unlockScroll } from "../utils/scroll-lock.js";
+import { waitForTransitionEnd } from "../utils/motion.js";
 
 /**
  * @typedef {import("../types.js").Plant} Plant
@@ -220,7 +221,8 @@ export const initModal = (plants) => {
     }
   });
 
-  modal.addEventListener("close", () => {
+  modal.addEventListener("close", async () => {
+    await waitForTransitionEnd(modal);
     unlockScroll();
   });
 

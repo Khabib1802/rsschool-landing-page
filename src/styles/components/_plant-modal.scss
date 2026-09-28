@@ -13,8 +13,40 @@
   box-shadow: var(--shadow-overlay);
   overflow: hidden;
 
+  opacity: 0;
+  transform: translateY(1rem) scale(0.98);
+  transition:
+    opacity var(--transition-normal),
+    transform var(--transition-normal),
+    overlay var(--transition-normal) allow-discrete,
+    display var(--transition-normal) allow-discrete;
+
+  &[open] {
+    opacity: 1;
+    transform: none;
+  }
+
   &::backdrop {
+    background-color: transparent;
+    transition:
+      background-color var(--transition-normal),
+      overlay var(--transition-normal) allow-discrete,
+      display var(--transition-normal) allow-discrete;
+  }
+
+  &[open]::backdrop {
     background-color: var(--overlay-color);
+  }
+}
+
+@starting-style {
+  .plant-modal[open] {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.98);
+  }
+
+  .plant-modal[open]::backdrop {
+    background-color: transparent;
   }
 }
 
