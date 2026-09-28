@@ -30,31 +30,38 @@ export const createPlantCard = (plant, options = {}) => {
     attrs: { src: plant.image, alt: "", width: "640", height: "800" },
   });
 
-  imageWrap.append(image);
-
   const body = createElement("div", { className: "plant-card__body" });
 
-  const category = createElement("span", {
+  const category = createElement("p", {
     className: "plant-card__category",
-    text: getCategoryLabel(plant.category),
+    text: plant.categories.map(getCategoryLabel).join(" · "),
   });
 
-  const heading = createElement(headingLevel, {
-    className: "plant-card__name",
-  });
-  const button = createElement("button", {
+  const name = createElement(headingLevel, { className: "plant-card__name" });
+
+  const action = createElement("button", {
     className: "plant-card__action",
     text: plant.name,
-    attrs: { "data-plant-id": plant.id },
+    attrs: {
+      type: "button",
+      "aria-haspopup": "dialog",
+      "data-plant-id": plant.id,
+    },
   });
-  heading.append(button);
 
-  const price = createElement("span", {
+  const description = createElement("p", {
+    className: "plant-card__description",
+    text: plant.description,
+  });
+
+  const price = createElement("p", {
     className: "plant-card__price",
-    text: `$${plant.price}`,
+    text: `$${plant.pricing.base}`,
   });
 
-  body.append(category, heading, price);
+  name.append(action);
+  imageWrap.append(image);
+  body.append(category, name, description, price);
   card.append(imageWrap, body);
   item.append(card);
 

@@ -40,7 +40,7 @@ const getFeaturedPlants = (plants) =>
  * @param {Plant} plant
  * @returns {HTMLLIElement}
  */
-const createSlideCard = (plant) =>
+const createSlide = (plant) =>
   createPlantCard(plant, {
     headingLevel: "h3",
     itemClassName: "plant-slider__item",
@@ -51,7 +51,7 @@ const createSlideCard = (plant) =>
  * @returns {HTMLLIElement}
  */
 const createCloneSlide = (plant) => {
-  const slide = createSlideCard(plant);
+  const slide = createSlide(plant);
 
   slide.setAttribute("aria-hidden", "true");
   slide
@@ -68,7 +68,7 @@ const createCloneSlide = (plant) => {
  */
 const buildTrackItems = (plants, cloneCount) => {
   const headClones = plants.slice(-cloneCount).map(createCloneSlide);
-  const realSlides = plants.map(createSlideCard);
+  const realSlides = plants.map(createSlide);
   const tailClones = plants.slice(0, cloneCount).map(createCloneSlide);
 
   return [...headClones, ...realSlides, ...tailClones];

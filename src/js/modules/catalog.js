@@ -1,82 +1,9 @@
-/**
- * @type {Record<string, string>}
- */
-const CATEGORY_LABELS = {
-  "easy-care": "Easy Care",
-  "low-light": "Low Light",
-  "pet-friendly": "Pet Friendly",
-  tropical: "Tropical",
-  succulent: "Succulents",
-};
-
-/**
- * @type {Record<string, string>}
- */
-const BREAKPOINTS = {
-  mobile: "(max-width: 768px)",
-  tablet: "(min-width: 769px) and (max-width: 1199px)",
-  desktop: "(min-width: 1200px)",
-};
-
-/**
- * @param {string} category
- * @returns {string}
- */
-const getCategoryLabel = (category) => CATEGORY_LABELS[category] ?? category;
-
-/**
- * @param {import("./api.js").Plant} plant
- * @returns {HTMLLIElement}
- */
-const createPlantCard = (plant) => {
-  const item = document.createElement("li");
-  const card = document.createElement("div");
-  const imageWrap = document.createElement("div");
-  const image = document.createElement("img");
-  const body = document.createElement("div");
-  const category = document.createElement("p");
-  const name = document.createElement("h2");
-  const description = document.createElement("p");
-  const price = document.createElement("p");
-
-  item.dataset.plantId = plant.id;
-
-  card.className = "plant-card";
-  card.setAttribute("aria-label", `View ${plant.name}`);
-
-  imageWrap.className = "plant-card__image-wrap";
-
-  image.src = plant.image;
-  image.alt = plant.name;
-  image.className = "plant-card__image";
-  image.width = 640;
-  image.height = 800;
-
-  body.className = "plant-card__body";
-
-  category.className = "plant-card__category";
-  category.textContent = plant.categories.map(getCategoryLabel).join(" · ");
-
-  name.className = "plant-card__name";
-  name.textContent = plant.name;
-
-  description.className = "plant-card__description";
-  description.textContent = plant.description;
-
-  price.className = "plant-card__price";
-  price.textContent = `$${plant.pricing.base}`;
-
-  imageWrap.append(image);
-  body.append(category, name, description, price);
-  card.append(imageWrap, body);
-  item.append(card);
-
-  return item;
-};
+import { MEDIA_QUERIES } from "../constants.js";
+import { createPlantCard } from "../components/plant-card.js";
 
 /**
  * @param {HTMLElement} grid
- * @param {import("./api.js").Plant[]} plants
+ * @param {import("../types.js").Plant[]} plants
  * @param {number} visibleCount
  */
 const renderPlants = (grid, plants, visibleCount) => {
@@ -94,9 +21,9 @@ const renderPlants = (grid, plants, visibleCount) => {
 };
 
 /**
- * @param {import("./api.js").Plant[]} plants
+ * @param {import("../types.js").Plant[]} plants
  * @param {string} category
- * @returns {import("./api.js").Plant[]}
+ * @returns {import("../types.js").Plant[]}
  */
 const filterPlants = (plants, category) => {
   if (category === "all") {
@@ -143,7 +70,7 @@ const setActiveCategoryButton = (buttons, activeButton) => {
 };
 
 /**
- * @param {import("./api.js").Plant[]} plants
+ * @param {import("../types.js").Plant[]} plants
  */
 export const initCatalog = (plants) => {
   const grid = document.querySelector("[data-plant-grid]");
@@ -191,7 +118,7 @@ export const initCatalog = (plants) => {
     updateCatalog();
   });
 
-  const mediaQueries = Object.values(BREAKPOINTS).map((query) =>
+  const mediaQueries = Object.values(MEDIA_QUERIES).map((query) =>
     window.matchMedia(query),
   );
 
