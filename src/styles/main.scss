@@ -1,0 +1,36 @@
+@use "abstracts/variables";
+@use "abstracts/mixins";
+@use "abstracts/breakpoints";
+
+@use "base/reset";
+@use "base/typography";
+@use "base/base";
+
+@use "layout/container";
+@use "layout/header";
+@use "layout/footer";
+
+@use "components/nav";
+@use "components/logo";
+@use "components/theme-toggle";
+@use "components/burger-button";
+@use "components/footer-nav";
+@use "components/social-links";
+@use "components/button";
+@use "components/plant-card";
+@use "components/space-card";
+@use "components/characteristic-indicator";
+@use "components/note-card";
+@use "components/category-nav";
+
+@use "./components/submission-notice";
+
+@use "sections/hero";
+@use "sections/featured-plants";
+@use "sections/shop-by-space";
+@use "sections/characteristics";
+@use "sections/brand-story";
+@use "sections/plant-notes";
+@use "sections/final-cta";
+@use "sections/catalog";
+@use "sections/journal-placeholder";

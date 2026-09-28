@@ -1,0 +1,53 @@
+@use "../abstracts/breakpoints";
+
+.footer {
+  border-top: var(--border-subtle);
+  background-color: var(--color-surface);
+  padding-block: var(--space-48) var(--space-32);
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+
+  @include breakpoints.above-tablet {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--space-48);
+  }
+}
+
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+
+  @include breakpoints.above-tablet {
+    justify-self: end;
+  }
+}
+
+.footer__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding-top: var(--space-16);
+  border-top: 1px solid var(--color-border);
+
+  @include breakpoints.above-tablet {
+    grid-column: 1 / -1;
+  }
+}
+
+.footer__project-links {
+  display: flex;
+  gap: var(--space-12);
+}

@@ -1,0 +1,25 @@
+@use "../abstracts/breakpoints";
+
+.characteristics {
+  padding-block: var(--space-48);
+  background-color: var(--color-surface);
+
+  @include breakpoints.above-desktop {
+    padding-block: var(--space-64);
+  }
+}
+
+.characteristics__header {
+  margin-bottom: var(--space-32);
+  max-width: 60ch;
+}
+
+.characteristics__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-48);
+
+  @include breakpoints.above-tablet {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

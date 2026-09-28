@@ -1,0 +1,46 @@
+@use "../abstracts/breakpoints";
+
+.category-nav {
+  display: flex;
+  gap: var(--space-8);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: var(--space-4);
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include breakpoints.above-tablet {
+    overflow-x: visible;
+    flex-wrap: wrap;
+  }
+}
+
+.category-nav__item {
+  flex: 0 0 auto;
+  padding: var(--space-8) var(--space-16);
+  border-radius: var(--radius-sm);
+  border: var(--border-subtle);
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--color-primary);
+    color: var(--color-text);
+  }
+}
+
+.category-nav__item--active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-surface);
+}

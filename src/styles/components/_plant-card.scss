@@ -1,0 +1,73 @@
+.plant-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  height: 100%;
+}
+
+.plant-card__image-wrap {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.plant-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  transition: transform var(--transition-normal);
+}
+
+.plant-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  flex-grow: 1;
+}
+
+.plant-card__category {
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.plant-card__name {
+  font-weight: 600;
+}
+
+.plant-card__description {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+.plant-card__price {
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-top: auto;
+}
+
+.plant-card__characteristics {
+  display: flex;
+  gap: var(--space-16);
+  margin-top: var(--space-4);
+}
+
+.plant-card__characteristic {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+.plant-card__indicator {
+  letter-spacing: 1px;
+  color: var(--color-primary);
+}
+
+.plant-card:hover .plant-card__image {
+  transform: scale(1.03);
+}

@@ -1,0 +1,26 @@
+{
+  "name": "rsschool-landing-page",
+  "version": "1.0.0",
+  "description": "Task - [Landing Page](https://github.com/rolling-scopes-school/tasks/tree/master/fullstack-engineering/tasks/landing-page)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 3000",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Khabib1802/rsschool-landing-page.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Khabib1802/rsschool-landing-page/issues"
+  },
+  "homepage": "https://github.com/Khabib1802/rsschool-landing-page#readme",
+  "devDependencies": {
+    "sass": "^1.104.1",
+    "vite": "^8.3.0"
+  }
+}

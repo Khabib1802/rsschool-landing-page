@@ -1,0 +1,58 @@
+:root {
+  color-scheme: light;
+
+  --color-bg: #f5f4ee;
+  --color-surface: #ffffff;
+  --color-primary: #193d32;
+  --color-secondary: #527568;
+  --color-text: #1c2420;
+  --color-text-muted: #7a837d;
+  --color-border: #d9ddd7;
+
+  --font-size-small: clamp(0.8125rem, 0.77rem + 0.19vw, 0.875rem);
+  --font-size-body:  clamp(1rem, 0.94rem + 0.28vw, 1.125rem);
+  --font-size-h3:    clamp(1.375rem, 1.22rem + 0.75vw, 1.75rem);
+  --font-size-h2:    clamp(1.75rem, 1.47rem + 1.31vw, 2.5rem);
+  --font-size-h1:    clamp(2.25rem, 1.78rem + 2.25vw, 3.5rem);
+  --font-size-display: clamp(2.75rem, 1.97rem + 3.75vw, 4.75rem);
+
+  --line-height-tight: 1.15;
+  --line-height-normal: 1.5;
+
+  --font-serif: "Cormorant Garamond", "Instrument Serif", Georgia, serif;
+  --font-sans:
+    "DM Sans", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-80: 80px;
+  --space-96: 96px;
+  --space-120: 120px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --border-subtle: 1px solid var(--color-border);
+
+  --shadow-overlay: 0 10px 30px rgba(0, 0, 0, 0.12);
+
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg: #111815;
+  --color-surface: #19221e;
+  --color-primary: #88a996;
+  --color-secondary: #527568;
+  --color-text: #e7e9df;
+  --color-text-muted: #9ca8a1;
+  --color-border: #303b35;
+}
