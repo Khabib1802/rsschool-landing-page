@@ -1,5 +1,6 @@
 import { calculateUnitPrice, calculateTotalPrice } from "./pricing.js";
 import { getCategoryLabel } from "../constants.js";
+import { createPlantModal } from "../components/plant-modal-template.js";
 import { lockScroll, unlockScroll } from "../utils/scroll-lock.js";
 
 /**
@@ -120,11 +121,9 @@ const resetOptions = (modal) => {
  * @param {import("../types.js").Plant[]} plants
  */
 export const initModal = (plants) => {
-  const modal = document.querySelector('[data-js="plant-modal"]');
+  const modal = createPlantModal();
 
-  if (!(modal instanceof HTMLDialogElement)) {
-    return;
-  }
+  document.body.append(modal);
 
   let currentPlant = null;
 

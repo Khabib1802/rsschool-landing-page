@@ -42,10 +42,7 @@ const getFeaturedPlants = (plants) =>
  */
 const createSlideCard = (plant) =>
   createPlantCard(plant, {
-    as: "a",
-    href: "./catalog.html",
     headingLevel: "h3",
-    ariaLabel: `View ${plant.name} in the catalog`,
     itemClassName: "plant-slider__item",
   });
 
@@ -58,7 +55,7 @@ const createCloneSlide = (plant) => {
 
   slide.setAttribute("aria-hidden", "true");
   slide
-    .querySelectorAll("a, button")
+    .querySelectorAll("button")
     .forEach((control) => control.setAttribute("tabindex", "-1"));
 
   return slide;

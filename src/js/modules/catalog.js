@@ -83,7 +83,7 @@ const renderPlants = (grid, plants, visibleCount) => {
   grid.replaceChildren();
 
   plants.forEach((plant, index) => {
-    const card = createPlantCard(plant);
+    const card = createPlantCard(plant, { headingLevel: "h2" });
 
     if (index >= visibleCount) {
       card.hidden = true;
