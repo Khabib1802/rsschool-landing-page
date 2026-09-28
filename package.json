@@ -1,12 +1,14 @@
 {
   "name": "rsschool-landing-page",
   "version": "1.0.0",
-  "description": "Task - [Landing Page](https://github.com/rolling-scopes-school/tasks/tree/master/fullstack-engineering/tasks/landing-page)",
+  "description": "MOSS — a landing page for indoor plants",
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 3000",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   },
   "homepage": "https://github.com/Khabib1802/rsschool-landing-page#readme",
   "devDependencies": {
+    "prettier": "^3.6.2",
     "sass": "^1.104.1",
     "vite": "^8.3.0"
   }

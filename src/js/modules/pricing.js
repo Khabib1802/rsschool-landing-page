@@ -1,5 +1,5 @@
 /**
- * @param {import("./api.js").Plant} plant
+ * @param {import("../types.js").Plant} plant
  * @param {"small" | "medium" | "large"} size
  * @param {"none" | "ceramic" | "stone"} pot
  * @returns {number}
