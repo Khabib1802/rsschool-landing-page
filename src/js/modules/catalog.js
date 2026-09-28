@@ -1,28 +1,14 @@
 import { MEDIA_QUERIES } from "../constants.js";
 import { createPlantCard } from "../components/plant-card.js";
+import { getTransitionTimeMs } from "../utils/motion.js";
 
-/**
- * @param {HTMLElement} grid
- * @param {import("../types.js").Plant[]} plants
- * @param {number} visibleCount
- */
-const renderPlants = (grid, plants, visibleCount) => {
-  grid.replaceChildren();
-
-  plants.forEach((plant, index) => {
-    const card = createPlantCard(plant, { headingLevel: "h2" });
-
-    if (index >= visibleCount) {
-      card.hidden = true;
-    }
-
-    grid.append(card);
-  });
-};
+const ACTIVE_CATEGORY_CLASS = "category-nav__item--active";
+const GRID_LEAVING_CLASS = "product-grid--leaving";
+const CARD_ENTERING_CLASS = "is-entering";
 
 /**
  * @param {import("../types.js").Plant[]} plants
- * @param {string} category
+ * @param {string} category "all" or a category id
  * @returns {import("../types.js").Plant[]}
  */
 const filterPlants = (plants, category) => {
@@ -46,6 +32,54 @@ const getPageSize = (grid) => {
 };
 
 /**
+ * @param {HTMLElement} card
+ * @param {number} order
+ */
+const playEnterAnimation = (card, order) => {
+  card.style.setProperty("--enter-index", String(order));
+  card.classList.add(CARD_ENTERING_CLASS);
+
+  card.addEventListener(
+    "animationend",
+    () => card.classList.remove(CARD_ENTERING_CLASS),
+    { once: true },
+  );
+};
+
+/**
+ * @param {HTMLElement[]} cards
+ * @param {number} visibleCount
+ */
+const updateVisibleCards = (cards, visibleCount) => {
+  let order = 0;
+
+  cards.forEach((card, index) => {
+    const shouldShow = index < visibleCount;
+    const wasHidden = card.hidden;
+
+    card.hidden = !shouldShow;
+
+    if (shouldShow && wasHidden) {
+      playEnterAnimation(card, order);
+      order += 1;
+    }
+  });
+};
+
+/**
+ * @param {import("../types.js").Plant[]} plants
+ * @returns {HTMLElement[]}
+ */
+const createCards = (plants) =>
+  plants.map((plant) => {
+    const card = createPlantCard(plant, { headingLevel: "h2" });
+
+    card.hidden = true;
+
+    return card;
+  });
+
+/**
  * @param {HTMLElement | null} button
  * @param {number} visibleCount
  * @param {number} totalCount
@@ -64,7 +98,7 @@ const setActiveCategoryButton = (buttons, activeButton) => {
   buttons.forEach((button) => {
     const isActive = button === activeButton;
 
-    button.classList.toggle("category-nav__item--active", isActive);
+    button.classList.toggle(ACTIVE_CATEGORY_CLASS, isActive);
     button.setAttribute("aria-current", String(isActive));
   });
 };
@@ -75,28 +109,51 @@ const setActiveCategoryButton = (buttons, activeButton) => {
 export const initCatalog = (plants) => {
   const grid = document.querySelector("[data-plant-grid]");
 
-  if (!grid) return;
+  if (!(grid instanceof HTMLElement)) return;
 
   const categoryButtons = document.querySelectorAll("[data-category]");
   const showMoreButton = document.querySelector("[data-show-more]");
 
+  let activeCategory = "all";
   let currentPlants = plants;
+  let cards = /** @type {HTMLElement[]} */ ([]);
   let visibleCount = getPageSize(grid);
+  let swapTimer = 0;
 
-  const updateCatalog = () => {
-    renderPlants(grid, currentPlants, visibleCount);
-    updateShowMoreButton(showMoreButton, visibleCount, currentPlants.length);
+  const refreshShowMore = () =>
+    updateShowMoreButton(showMoreButton, visibleCount, cards.length);
+
+  const rebuildCards = () => {
+    cards = createCards(currentPlants);
+    grid.replaceChildren(...cards);
+
+    updateVisibleCards(cards, visibleCount);
+    refreshShowMore();
+  };
+
+  const showCategory = () => {
+    visibleCount = getPageSize(grid);
+
+    window.clearTimeout(swapTimer);
+    grid.classList.add(GRID_LEAVING_CLASS);
+
+    swapTimer = window.setTimeout(() => {
+      rebuildCards();
+      grid.classList.remove(GRID_LEAVING_CLASS);
+    }, getTransitionTimeMs(grid));
   };
 
   const resetPagination = () => {
     visibleCount = getPageSize(grid);
-    updateCatalog();
+
+    updateVisibleCards(cards, visibleCount);
+    refreshShowMore();
   };
 
-  updateCatalog();
+  rebuildCards();
 
   const initiallyActiveButton = Array.from(categoryButtons).find((button) =>
-    button.classList.contains("category-nav__item--active"),
+    button.classList.contains(ACTIVE_CATEGORY_CLASS),
   );
 
   if (initiallyActiveButton) {
@@ -107,22 +164,26 @@ export const initCatalog = (plants) => {
     button.addEventListener("click", () => {
       const category = button.dataset.category ?? "all";
 
+      if (category === activeCategory) return;
+
+      activeCategory = category;
       currentPlants = filterPlants(plants, category);
+
       setActiveCategoryButton(categoryButtons, button);
-      resetPagination();
+      showCategory();
     });
   });
 
   showMoreButton?.addEventListener("click", () => {
+    if (grid.classList.contains(GRID_LEAVING_CLASS)) return;
+
     visibleCount += getPageSize(grid);
-    updateCatalog();
+
+    updateVisibleCards(cards, visibleCount);
+    refreshShowMore();
   });
 
-  const mediaQueries = Object.values(MEDIA_QUERIES).map((query) =>
-    window.matchMedia(query),
-  );
-
-  mediaQueries.forEach((mq) => {
-    mq.addEventListener("change", resetPagination);
+  Object.values(MEDIA_QUERIES).forEach((query) => {
+    window.matchMedia(query).addEventListener("change", resetPagination);
   });
 };
