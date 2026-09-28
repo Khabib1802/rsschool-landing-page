@@ -1,11 +1,18 @@
-import { BREAKPOINTS } from "../constants.js";
 import { createPlantCard } from "../components/plant-card.js";
 
 const FEATURED_COUNT = 5;
 
+const MAX_VISIBLE_SLIDES = 3;
+
+const MOVE_FALLBACK_MS = 500;
+
 /**
- * @param {import("../types.js").Plant[]} plants
- * @returns {import("../types.js").Plant[]}
+ * @typedef {import("../types.js").Plant} Plant
+ */
+
+/**
+ * @param {Plant[]} plants
+ * @returns {Plant[]}
  */
 const shufflePlants = (plants) => {
   const shuffled = [...plants];
@@ -22,23 +29,15 @@ const shufflePlants = (plants) => {
   return shuffled;
 };
 
+/**
+ * @param {Plant[]} plants
+ * @returns {Plant[]}
+ */
 const getFeaturedPlants = (plants) =>
   shufflePlants(plants).slice(0, FEATURED_COUNT);
 
-const getSlidesPerView = () => {
-  if (window.innerWidth >= BREAKPOINTS.desktop) {
-    return 3;
-  }
-
-  if (window.innerWidth > BREAKPOINTS.mobile) {
-    return 2;
-  }
-
-  return 1;
-};
-
 /**
- * @param {import("../types.js").Plant} plant
+ * @param {Plant} plant
  * @returns {HTMLLIElement}
  */
 const createSlideCard = (plant) =>
@@ -50,88 +49,126 @@ const createSlideCard = (plant) =>
     itemClassName: "plant-slider__item",
   });
 
+/**
+ * @param {Plant} plant
+ * @returns {HTMLLIElement}
+ */
+const createCloneSlide = (plant) => {
+  const slide = createSlideCard(plant);
+
+  slide.setAttribute("aria-hidden", "true");
+  slide
+    .querySelectorAll("a, button")
+    .forEach((control) => control.setAttribute("tabindex", "-1"));
+
+  return slide;
+};
+
+/**
+ * @param {Plant[]} plants
+ * @param {number} cloneCount
+ * @returns {HTMLLIElement[]}
+ */
+const buildTrackItems = (plants, cloneCount) => {
+  const headClones = plants.slice(-cloneCount).map(createCloneSlide);
+  const realSlides = plants.map(createSlideCard);
+  const tailClones = plants.slice(0, cloneCount).map(createCloneSlide);
+
+  return [...headClones, ...realSlides, ...tailClones];
+};
+
+/**
+ * @param {Plant[]} plants
+ */
 export const initSlider = (plants) => {
   const track = document.querySelector("[data-featured-track]");
-
-  if (!track) return;
-
   const previousButton = document.querySelector("[data-slider-prev]");
   const nextButton = document.querySelector("[data-slider-next]");
 
-  const featuredPlants = getFeaturedPlants(plants);
+  if (!(track instanceof HTMLElement)) return;
 
-  let currentIndex = 0;
-  let slidesPerView = getSlidesPerView();
+  const featuredPlants = getFeaturedPlants(plants);
+  const realCount = featuredPlants.length;
+
+  if (realCount === 0) return;
+
+  const cloneCount = Math.min(MAX_VISIBLE_SLIDES, realCount);
+
+  const firstRealSlot = cloneCount;
+
+  let currentSlot = firstRealSlot;
+  let isMoving = false;
+  let fallbackTimer = 0;
 
   /**
    * @returns {number}
    */
   const getSlideStep = () => {
-    const firstItem = track.firstElementChild;
+    const firstSlide = track.firstElementChild;
 
-    if (!(firstItem instanceof HTMLElement)) return 0;
+    if (!(firstSlide instanceof HTMLElement)) return 0;
 
-    const trackGap = Number.parseFloat(getComputedStyle(track).columnGap) || 0;
+    const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 0;
 
-    return firstItem.getBoundingClientRect().width + trackGap;
+    return firstSlide.getBoundingClientRect().width + gap;
   };
 
-  const updatePosition = () => {
-    const offset = currentIndex * getSlideStep();
-
-    track.style.transform = `translateX(-${offset}px)`;
+  const applyPosition = () => {
+    track.style.transform = `translateX(${-currentSlot * getSlideStep()}px)`;
   };
 
-  const updateControls = () => {
-    const maxIndex = Math.max(0, featuredPlants.length - slidesPerView);
+  /**
+   * @param {number} slot
+   */
+  const jumpToSlot = (slot) => {
+    currentSlot = slot;
 
-    if (currentIndex > maxIndex) {
-      currentIndex = 0;
+    track.style.transition = "none";
+    applyPosition();
+
+    void track.offsetWidth;
+
+    track.style.transition = "";
+  };
+
+  const finishMove = () => {
+    window.clearTimeout(fallbackTimer);
+
+    if (!isMoving) return;
+
+    isMoving = false;
+
+    if (currentSlot >= firstRealSlot + realCount) {
+      jumpToSlot(currentSlot - realCount);
+    } else if (currentSlot < firstRealSlot) {
+      jumpToSlot(currentSlot + realCount);
     }
-
-    updatePosition();
-
-    if (previousButton) {
-      previousButton.disabled = featuredPlants.length <= slidesPerView;
-    }
-
-    if (nextButton) {
-      nextButton.disabled = featuredPlants.length <= slidesPerView;
-    }
   };
 
-  const render = () => {
-    track.replaceChildren(...featuredPlants.map(createSlideCard));
+  /**
+   * @param {1 | -1} direction 1 = next, -1 = previous
+   */
+  const move = (direction) => {
+    if (isMoving) return;
 
-    updateControls();
+    isMoving = true;
+    currentSlot += direction;
+    applyPosition();
+
+    fallbackTimer = window.setTimeout(finishMove, MOVE_FALLBACK_MS);
   };
 
-  previousButton?.addEventListener("click", () => {
-    const maxIndex = Math.max(0, featuredPlants.length - slidesPerView);
+  track.replaceChildren(...buildTrackItems(featuredPlants, cloneCount));
+  jumpToSlot(firstRealSlot);
 
-    currentIndex = currentIndex <= 0 ? maxIndex : currentIndex - 1;
-
-    updatePosition();
+  track.addEventListener("transitionend", (event) => {
+    if (event.target === track && event.propertyName === "transform") {
+      finishMove();
+    }
   });
 
-  nextButton?.addEventListener("click", () => {
-    const maxIndex = Math.max(0, featuredPlants.length - slidesPerView);
+  previousButton?.addEventListener("click", () => move(-1));
+  nextButton?.addEventListener("click", () => move(1));
 
-    currentIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
-
-    updatePosition();
-  });
-
-  window.addEventListener("resize", () => {
-    const nextSlidesPerView = getSlidesPerView();
-
-    if (nextSlidesPerView === slidesPerView) return;
-
-    slidesPerView = nextSlidesPerView;
-    currentIndex = 0;
-
-    updateControls();
-  });
-
-  render();
+  window.addEventListener("resize", () => jumpToSlot(currentSlot));
 };
