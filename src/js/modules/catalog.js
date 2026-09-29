@@ -41,30 +41,16 @@ const pickKnown = (value, labels) =>
 /**
  * @returns {Filters}
  */
-const readFilters = () => {
-  const params = new URLSearchParams(window.location.search);
-
-  return {
-    category: pickKnown(params.get("category"), CATEGORY_LABELS),
-    space: pickKnown(params.get("space"), SPACE_LABELS),
-  };
-};
-
-/**
- * @param {Filters} filters
- */
-const writeFilters = (filters) => {
+const takeInitialFilters = () => {
   const url = new URL(window.location.href);
+  const space = pickKnown(url.searchParams.get("space"), SPACE_LABELS);
 
-  Object.entries(filters).forEach(([key, value]) => {
-    if (value === ALL) {
-      url.searchParams.delete(key);
-    } else {
-      url.searchParams.set(key, value);
-    }
-  });
+  if (url.search) {
+    url.search = "";
+    window.history.replaceState(null, "", url);
+  }
 
-  window.history.replaceState(null, "", url);
+  return { category: ALL, space };
 };
 
 /**
@@ -189,7 +175,7 @@ export const initCatalog = (plants) => {
     return;
   }
 
-  let filters = readFilters();
+  let filters = takeInitialFilters();
   let currentPlants = filterPlants(plants, filters);
   let cards = /** @type {HTMLElement[]} */ ([]);
   let visibleCount = getPageSize();
@@ -247,7 +233,6 @@ export const initCatalog = (plants) => {
     currentPlants = filterPlants(plants, filters);
     visibleCount = getPageSize();
 
-    writeFilters(filters);
     setCategoryActive(filters.category);
     setSpaceActive(filters.space);
 
