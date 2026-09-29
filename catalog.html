@@ -9,7 +9,14 @@
 
     <script>
       (() => {
-        const saved = localStorage.getItem("moss-theme");
+        let saved = null;
+
+        try {
+          saved = localStorage.getItem("moss-theme");
+        } catch {
+          saved = null;
+        }
+
         const systemDark = window.matchMedia(
           "(prefers-color-scheme: dark)",
         ).matches;
@@ -32,11 +39,11 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="/rsschool-landing-page/assets/main-CqkTgnsW.js"></script>
-    <link rel="stylesheet" crossorigin href="/rsschool-landing-page/assets/main-BxCNEDxB.css">
+    <script type="module" crossorigin src="/rsschool-landing-page/assets/main-urqEZu2l.js"></script>
+    <link rel="stylesheet" crossorigin href="/rsschool-landing-page/assets/main-DKDqvc0-.css">
   </head>
 
-  <body>
+  <body data-page="catalog">
     <header class="header">
       <div class="header__inner container">
         <a href="./" class="logo">MOSS</a>
@@ -56,6 +63,25 @@
         </nav>
 
         <div class="header__actions">
+          <button
+            type="button"
+            class="cart-button"
+            data-cart-open
+            aria-label="Open collection"
+            aria-haspopup="dialog"
+          >
+            <svg
+              class="cart-button__icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M5 8h14l-1 12H6L5 8Z" />
+              <path d="M9 8V7a3 3 0 0 1 6 0v1" />
+            </svg>
+
+            <span class="cart-button__count" data-cart-count hidden>0</span>
+          </button>
+
           <button
             type="button"
             class="theme-toggle"
@@ -110,70 +136,54 @@
         </div>
       </section>
 
-      <!-- Categories -->
-      <div class="catalog-categories">
-        <div class="container">
-          <nav
-            class="category-nav"
-            aria-label="Filter by category"
-            data-category-filter
-          >
-            <button
-              type="button"
-              class="category-nav__item category-nav__item--active"
-              data-category="all"
-            >
-              All
-            </button>
+      <!-- Filters -->
+      <div class="catalog-filters" data-catalog-filters hidden>
+        <div class="container catalog-filters__inner">
+          <div class="filter-group">
+            <p class="filter-group__label" id="category-filter-label">
+              Category
+            </p>
 
-            <button
-              type="button"
-              class="category-nav__item"
-              data-category="easy-care"
-            >
-              Easy Care
-            </button>
+            <nav
+              class="category-nav"
+              aria-labelledby="category-filter-label"
+              data-filter="category"
+            ></nav>
+          </div>
 
-            <button
-              type="button"
-              class="category-nav__item"
-              data-category="low-light"
-            >
-              Low Light
-            </button>
+          <div class="filter-group">
+            <p class="filter-group__label" id="space-filter-label">Room</p>
 
-            <button
-              type="button"
-              class="category-nav__item"
-              data-category="pet-friendly"
-            >
-              Pet Friendly
-            </button>
-
-            <button
-              type="button"
-              class="category-nav__item"
-              data-category="tropical"
-            >
-              Tropical
-            </button>
-
-            <button
-              type="button"
-              class="category-nav__item"
-              data-category="succulent"
-            >
-              Succulents
-            </button>
-          </nav>
+            <nav
+              class="category-nav"
+              aria-labelledby="space-filter-label"
+              data-filter="space"
+            ></nav>
+          </div>
         </div>
       </div>
 
       <!-- Product grid -->
       <section class="catalog-grid">
         <div class="container">
+          <div class="catalog-results" data-catalog-results hidden>
+            <p class="catalog-results__count" data-catalog-count></p>
+
+            <button
+              type="button"
+              class="link-button"
+              data-clear-filters
+              hidden
+            >
+              Clear filters
+            </button>
+          </div>
+
+          <div class="catalog-message" data-catalog-message hidden></div>
+
           <ul class="product-grid" data-plant-grid></ul>
-          <div class="catalog-show-more">
+
+          <div class="catalog-show-more" data-show-more-wrap hidden>
             <button
               type="button"
               class="button button--secondary"

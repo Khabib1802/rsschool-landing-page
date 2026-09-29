@@ -9,7 +9,14 @@
 
     <script>
       (() => {
-        const saved = localStorage.getItem("moss-theme");
+        let saved = null;
+
+        try {
+          saved = localStorage.getItem("moss-theme");
+        } catch {
+          saved = null;
+        }
+
         const systemDark = window.matchMedia(
           "(prefers-color-scheme: dark)",
         ).matches;
@@ -32,11 +39,11 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="/rsschool-landing-page/assets/main-CqkTgnsW.js"></script>
-    <link rel="stylesheet" crossorigin href="/rsschool-landing-page/assets/main-BxCNEDxB.css">
+    <script type="module" crossorigin src="/rsschool-landing-page/assets/main-urqEZu2l.js"></script>
+    <link rel="stylesheet" crossorigin href="/rsschool-landing-page/assets/main-DKDqvc0-.css">
   </head>
 
-  <body>
+  <body data-page="home">
     <header class="header">
       <div class="header__inner container">
         <a href="./" class="logo">MOSS</a>
@@ -56,6 +63,25 @@
         </nav>
 
         <div class="header__actions">
+          <button
+            type="button"
+            class="cart-button"
+            data-cart-open
+            aria-label="Open collection"
+            aria-haspopup="dialog"
+          >
+            <svg
+              class="cart-button__icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M5 8h14l-1 12H6L5 8Z" />
+              <path d="M9 8V7a3 3 0 0 1 6 0v1" />
+            </svg>
+
+            <span class="cart-button__count" data-cart-count hidden>0</span>
+          </button>
+
           <button
             type="button"
             class="theme-toggle"
@@ -115,7 +141,7 @@
 
           <div class="hero__media">
             <img
-              src="/rsschool-landing-page/images/hero.jpg"
+              src="/rsschool-landing-page/images/hero.webp"
               alt="Indoor plant in a modern interior"
               class="hero__image"
               width="800"
@@ -184,7 +210,7 @@
             <li>
               <article class="space-card">
                 <img
-                  src="/rsschool-landing-page/images/spaces/bedroom.jpg"
+                  src="/rsschool-landing-page/images/spaces/bedroom.webp"
                   alt="Bedroom with an indoor plant"
                   class="space-card__image"
                   width="640"
@@ -207,7 +233,7 @@
             <li>
               <article class="space-card">
                 <img
-                  src="/rsschool-landing-page/images/spaces/living-room.jpg"
+                  src="/rsschool-landing-page/images/spaces/living-room.webp"
                   alt="Living room with a large indoor plant"
                   class="space-card__image"
                   width="640"
@@ -230,7 +256,7 @@
             <li>
               <article class="space-card">
                 <img
-                  src="/rsschool-landing-page/images/spaces/office.jpg"
+                  src="/rsschool-landing-page/images/spaces/office.webp"
                   alt="Modern office with a compact indoor plant"
                   class="space-card__image"
                   width="640"
@@ -253,7 +279,7 @@
             <li>
               <article class="space-card">
                 <img
-                  src="/rsschool-landing-page/images/spaces/bathroom.jpg"
+                  src="/rsschool-landing-page/images/spaces/bathroom.webp"
                   alt="Bathroom with a humidity-tolerant indoor plant"
                   class="space-card__image"
                   width="640"
@@ -281,7 +307,7 @@
         <div class="brand-story__inner container">
           <div class="brand-story__media">
             <img
-              src="/rsschool-landing-page/images/brand-story.jpg"
+              src="/rsschool-landing-page/images/brand-story.webp"
               alt="Indoor plants arranged in a modern naturally lit interior"
               class="brand-story__image"
               width="640"
@@ -321,7 +347,7 @@
             <a class="note-card" href="./journal.html">
               <div class="note-card__image-wrap">
                 <img
-                  src="/rsschool-landing-page/images/journal/low-light.jpg"
+                  src="/rsschool-landing-page/images/journal/low-light.webp"
                   alt="Indoor plant in a softly lit room"
                   class="note-card__image"
                   width="640"
@@ -351,7 +377,7 @@
             <a class="note-card" href="./journal.html">
               <div class="note-card__image-wrap">
                 <img
-                  src="/rsschool-landing-page/images/journal/small-spaces.jpg"
+                  src="/rsschool-landing-page/images/journal/small-spaces.webp"
                   alt="Small indoor plant on a compact shelf"
                   class="note-card__image"
                   width="640"
@@ -379,7 +405,7 @@
             <a class="note-card" href="./journal.html">
               <div class="note-card__image-wrap">
                 <img
-                  src="/rsschool-landing-page/images/journal/watering.jpg"
+                  src="/rsschool-landing-page/images/journal/watering.webp"
                   alt="Watering an indoor plant"
                   class="note-card__image"
                   width="640"
