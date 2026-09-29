@@ -7,9 +7,9 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "index.html"),
-        catalog: resolve(__dirname, "catalog.html"),
-        journal: resolve(__dirname, "journal.html"),
+        main: resolve(import.meta.dirname, "index.html"),
+        catalog: resolve(import.meta.dirname, "catalog.html"),
+        journal: resolve(import.meta.dirname, "journal.html"),
       },
     },
   },
