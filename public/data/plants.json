@@ -1,0 +1,444 @@
+[
+  {
+    "id": "monstera-deliciosa",
+    "name": "Monstera Deliciosa",
+    "description": "A tropical plant with large split leaves and a naturally spreading growth habit.",
+    "image": "./images/plants/monstera-deliciosa.webp",
+    "categories": ["tropical"],
+    "spaces": ["living-room", "bedroom", "office"],
+    "characteristics": {
+      "light": 3,
+      "water": 3,
+      "care": 2
+    },
+    "pricing": {
+      "base": 48,
+      "sizes": {
+        "small": 0,
+        "medium": 12,
+        "large": 28
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "snake-plant",
+    "name": "Snake Plant",
+    "description": "A hardy upright plant with stiff sword-shaped leaves and strong architectural form.",
+    "image": "./images/plants/snake-plant.webp",
+    "categories": ["easy-care", "low-light"],
+    "spaces": ["bedroom", "office", "bathroom"],
+    "characteristics": {
+      "light": 1,
+      "water": 1,
+      "care": 1
+    },
+    "pricing": {
+      "base": 32,
+      "sizes": {
+        "small": 0,
+        "medium": 8,
+        "large": 18
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "zz-plant",
+    "name": "ZZ Plant",
+    "description": "A resilient plant with glossy leaflets and a naturally compact, upright form.",
+    "image": "./images/plants/zz-plant.webp",
+    "categories": ["easy-care", "low-light"],
+    "spaces": ["bedroom", "office", "living-room"],
+    "characteristics": {
+      "light": 1,
+      "water": 1,
+      "care": 1
+    },
+    "pricing": {
+      "base": 36,
+      "sizes": {
+        "small": 0,
+        "medium": 9,
+        "large": 20
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "fiddle-leaf-fig",
+    "name": "Fiddle Leaf Fig",
+    "description": "A tall indoor fig with broad, violin-shaped leaves and an upright growth habit.",
+    "image": "./images/plants/fiddle-leaf-fig.webp",
+    "categories": ["tropical"],
+    "spaces": ["living-room", "office"],
+    "characteristics": {
+      "light": 4,
+      "water": 3,
+      "care": 3
+    },
+    "pricing": {
+      "base": 58,
+      "sizes": {
+        "small": 0,
+        "medium": 16,
+        "large": 34
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "pilea-peperomioides",
+    "name": "Pilea Peperomioides",
+    "description": "A compact houseplant with distinctive round leaves carried on long slender stems.",
+    "image": "./images/plants/pilea-peperomioides.webp",
+    "categories": ["easy-care"],
+    "spaces": ["office", "bedroom", "bathroom"],
+    "characteristics": {
+      "light": 3,
+      "water": 2,
+      "care": 2
+    },
+    "pricing": {
+      "base": 24,
+      "sizes": {
+        "small": 0,
+        "medium": 6,
+        "large": 12
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "calathea-orbifolia",
+    "name": "Calathea Orbifolia",
+    "description": "A foliage plant with broad rounded leaves marked by distinctive pale green stripes.",
+    "image": "./images/plants/calathea-orbifolia.webp",
+    "categories": ["tropical"],
+    "spaces": ["bathroom", "bedroom"],
+    "characteristics": {
+      "light": 2,
+      "water": 3,
+      "care": 4
+    },
+    "pricing": {
+      "base": 46,
+      "sizes": {
+        "small": 0,
+        "medium": 10,
+        "large": 22
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "aloe-vera",
+    "name": "Aloe Vera",
+    "description": "A compact succulent with thick pointed leaves arranged in an upright rosette.",
+    "image": "./images/plants/aloe-vera.webp",
+    "categories": ["easy-care", "succulent"],
+    "spaces": ["office", "bedroom", "living-room"],
+    "characteristics": {
+      "light": 4,
+      "water": 1,
+      "care": 1
+    },
+    "pricing": {
+      "base": 28,
+      "sizes": {
+        "small": 0,
+        "medium": 7,
+        "large": 14
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "string-of-pearls",
+    "name": "String of Pearls",
+    "description": "A trailing succulent with slender stems covered in small spherical leaves.",
+    "image": "./images/plants/string-of-pearls.webp",
+    "categories": ["easy-care", "succulent"],
+    "spaces": ["office", "bedroom", "living-room"],
+    "characteristics": {
+      "light": 4,
+      "water": 1,
+      "care": 2
+    },
+    "pricing": {
+      "base": 30,
+      "sizes": {
+        "small": 0,
+        "medium": 7,
+        "large": 15
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "rubber-plant",
+    "name": "Rubber Plant",
+    "description": "A robust indoor tree with broad glossy leaves and an upright growth habit.",
+    "image": "./images/plants/rubber-plant.webp",
+    "categories": ["easy-care", "tropical"],
+    "spaces": ["living-room", "office", "bedroom"],
+    "characteristics": {
+      "light": 3,
+      "water": 2,
+      "care": 2
+    },
+    "pricing": {
+      "base": 44,
+      "sizes": {
+        "small": 0,
+        "medium": 12,
+        "large": 26
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "bird-of-paradise",
+    "name": "Bird of Paradise",
+    "description": "A large tropical plant with tall stems and broad paddle-shaped leaves.",
+    "image": "./images/plants/bird-of-paradise.webp",
+    "categories": ["tropical"],
+    "spaces": ["living-room"],
+    "characteristics": {
+      "light": 4,
+      "water": 3,
+      "care": 3
+    },
+    "pricing": {
+      "base": 68,
+      "sizes": {
+        "small": 0,
+        "medium": 18,
+        "large": 38
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "peperomia",
+    "name": "Peperomia",
+    "description": "A compact houseplant with thick decorative leaves and an adaptable growth habit.",
+    "image": "./images/plants/peperomia.webp",
+    "categories": ["easy-care", "pet-friendly"],
+    "spaces": ["office", "bedroom", "bathroom"],
+    "characteristics": {
+      "light": 3,
+      "water": 2,
+      "care": 1
+    },
+    "pricing": {
+      "base": 26,
+      "sizes": {
+        "small": 0,
+        "medium": 6,
+        "large": 12
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "boston-fern",
+    "name": "Boston Fern",
+    "description": "A lush fern with long arching fronds that form a full, softly cascading shape.",
+    "image": "./images/plants/boston-fern.webp",
+    "categories": ["pet-friendly", "tropical"],
+    "spaces": ["bathroom", "bedroom", "living-room"],
+    "characteristics": {
+      "light": 2,
+      "water": 4,
+      "care": 3
+    },
+    "pricing": {
+      "base": 34,
+      "sizes": {
+        "small": 0,
+        "medium": 9,
+        "large": 19
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "hoya-carnosa",
+    "name": "Hoya Carnosa",
+    "description": "A trailing tropical plant with thick waxy leaves and clusters of small star-shaped flowers.",
+    "image": "./images/plants/hoya-carnosa.webp",
+    "categories": ["easy-care", "pet-friendly", "tropical"],
+    "spaces": ["office", "bedroom", "living-room"],
+    "characteristics": {
+      "light": 3,
+      "water": 2,
+      "care": 2
+    },
+    "pricing": {
+      "base": 38,
+      "sizes": {
+        "small": 0,
+        "medium": 9,
+        "large": 18
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "maranta",
+    "name": "Maranta",
+    "description": "A compact tropical plant with patterned leaves and distinctive contrasting veins.",
+    "image": "./images/plants/maranta.webp",
+    "categories": ["pet-friendly", "tropical"],
+    "spaces": ["bedroom", "bathroom", "office"],
+    "characteristics": {
+      "light": 2,
+      "water": 3,
+      "care": 3
+    },
+    "pricing": {
+      "base": 34,
+      "sizes": {
+        "small": 0,
+        "medium": 8,
+        "large": 17
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "tradescantia-zebrina",
+    "name": "Tradescantia Zebrina",
+    "description": "A trailing plant with striped silver-green leaves and deep purple undersides.",
+    "image": "./images/plants/tradescantia-zebrina.webp",
+    "categories": ["easy-care"],
+    "spaces": ["office", "bedroom", "living-room"],
+    "characteristics": {
+      "light": 3,
+      "water": 2,
+      "care": 1
+    },
+    "pricing": {
+      "base": 28,
+      "sizes": {
+        "small": 0,
+        "medium": 6,
+        "large": 13
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "anthurium-andraeanum",
+    "name": "Anthurium",
+    "description": "A tropical houseplant with glossy leaves and long-lasting colorful flower-like spathes.",
+    "image": "./images/plants/anthurium.webp",
+    "categories": ["tropical"],
+    "spaces": ["living-room", "bathroom", "bedroom"],
+    "characteristics": {
+      "light": 3,
+      "water": 3,
+      "care": 3
+    },
+    "pricing": {
+      "base": 42,
+      "sizes": {
+        "small": 0,
+        "medium": 10,
+        "large": 21
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  },
+  {
+    "id": "caladium",
+    "name": "Caladium",
+    "description": "A tropical foliage plant with broad heart-shaped leaves in striking shades of green, pink and white.",
+    "image": "./images/plants/caladium.webp",
+    "categories": ["tropical"],
+    "spaces": ["living-room", "bathroom", "bedroom"],
+    "characteristics": {
+      "light": 3,
+      "water": 3,
+      "care": 3
+    },
+    "pricing": {
+      "base": 40,
+      "sizes": {
+        "small": 0,
+        "medium": 9,
+        "large": 19
+      },
+      "pots": {
+        "none": 0,
+        "ceramic": 8,
+        "stone": 14
+      }
+    }
+  }
+]

@@ -5,12 +5,17 @@
 
 html {
   height: 100%;
+  scroll-padding-top: var(--header-height, 4rem);
 }
 
 body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 .main {
@@ -28,4 +33,9 @@ body {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
+}
+
+body.is-scroll-locked {
+  overflow: hidden;
+  padding-right: var(--scrollbar-width, 0px);
 }

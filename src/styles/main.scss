@@ -1,5 +1,4 @@
 @use "abstracts/variables";
-@use "abstracts/mixins";
 @use "abstracts/breakpoints";
 
 @use "base/reset";
@@ -13,6 +12,7 @@
 @use "components/nav";
 @use "components/logo";
 @use "components/theme-toggle";
+@use "components/cart-button";
 @use "components/burger-button";
 @use "components/footer-nav";
 @use "components/social-links";
@@ -22,8 +22,9 @@
 @use "components/characteristic-indicator";
 @use "components/note-card";
 @use "components/category-nav";
-
-@use "./components/submission-notice";
+@use "components/overlay";
+@use "components/plant-modal";
+@use "components/cart-drawer";
 
 @use "sections/hero";
 @use "sections/featured-plants";

@@ -32,8 +32,8 @@
     color var(--transition-fast),
     border-color var(--transition-fast);
 
-  &:hover,
-  &:focus-visible {
+  &:not(.category-nav__item--active):hover,
+  &:not(.category-nav__item--active):focus-visible {
     border-color: var(--color-primary);
     color: var(--color-text);
   }

@@ -1,16 +1,49 @@
 @use "../abstracts/breakpoints";
 
 .header__nav {
-  display: none;
-
   @include breakpoints.above-tablet {
     display: block;
+  }
+
+  @include breakpoints.below-tablet {
+    position: absolute;
+    top: 100%;
+    inset-inline: 0;
+    padding: var(--space-24) var(--space-16) var(--space-32);
+    border-bottom: var(--border-subtle);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-overlay);
+
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    transition:
+      opacity var(--transition-normal),
+      transform var(--transition-normal),
+      visibility 0s linear var(--transition-normal);
+  }
+}
+
+.header__nav--open {
+  @include breakpoints.below-tablet {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity var(--transition-normal),
+      transform var(--transition-normal),
+      visibility 0s linear 0s;
   }
 }
 
 .nav-list {
   display: flex;
   gap: var(--space-24);
+
+  @include breakpoints.below-tablet {
+    flex-direction: column;
+    gap: var(--space-16);
+  }
 }
 
 .nav-list__link {
@@ -25,4 +58,21 @@
   &:focus-visible {
     border-color: var(--color-primary);
   }
+}
+
+.nav-scrim {
+  z-index: 20;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity var(--transition-normal),
+    visibility 0s linear var(--transition-normal);
+}
+
+.nav-scrim--visible {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity var(--transition-normal),
+    visibility 0s linear 0s;
 }

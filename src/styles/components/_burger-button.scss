@@ -1,5 +1,7 @@
 @use "../abstracts/breakpoints";
 
+$bar-offset: 0.375rem;
+
 .burger {
   width: 2rem;
   height: 2rem;
@@ -21,7 +23,9 @@
   height: 2px;
   background-color: var(--color-text);
   border-radius: 1px;
-  transition: transform var(--transition-fast);
+  transition:
+    transform var(--transition-normal),
+    background-color var(--transition-normal);
 }
 
 .burger__icon {
@@ -33,10 +37,24 @@
     position: absolute;
     left: 0;
   }
+
   &::before {
-    top: -6px;
+    top: -$bar-offset;
   }
+
   &::after {
-    top: 6px;
+    top: $bar-offset;
+  }
+}
+
+.burger--active .burger__icon {
+  background-color: transparent;
+
+  &::before {
+    transform: translateY($bar-offset) rotate(45deg);
+  }
+
+  &::after {
+    transform: translateY(-$bar-offset) rotate(-45deg);
   }
 }
