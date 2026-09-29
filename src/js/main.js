@@ -2,12 +2,15 @@ import "../styles/main.scss";
 
 import { initTheme } from "./modules/theme.js";
 import { initBurgerMenu } from "./modules/burger.js";
+import { initHeader } from "./modules/header.js";
+import { initAnchorScroll } from "./modules/anchor-scroll.js";
 import { loadPlants } from "./modules/api.js";
 import { initCatalog, showCatalogError } from "./modules/catalog.js";
 import { initModal } from "./modules/modal.js";
 import { initSlider } from "./modules/slider.js";
 
 initTheme();
+initHeader();
 initBurgerMenu();
 
 const fetchPlants = async (onError) => {
@@ -44,4 +47,6 @@ const PAGE_INITIALIZERS = {
   catalog: initCatalogPage,
 };
 
-PAGE_INITIALIZERS[document.body.dataset.page]?.();
+const pageReady = PAGE_INITIALIZERS[document.body.dataset.page]?.();
+
+initAnchorScroll(pageReady);
