@@ -3,6 +3,7 @@ import "../styles/main.scss";
 import { initTheme } from "./modules/theme.js";
 import { initBurgerMenu } from "./modules/burger.js";
 import { initHeader } from "./modules/header.js";
+import { initCart } from "./modules/cart.js";
 import { initAnchorScroll } from "./modules/anchor-scroll.js";
 import { loadPlants } from "./modules/api.js";
 import { initCatalog, showCatalogError } from "./modules/catalog.js";
@@ -12,6 +13,7 @@ import { initSlider } from "./modules/slider.js";
 initTheme();
 initHeader();
 initBurgerMenu();
+initCart();
 
 const fetchPlants = async (onError) => {
   try {

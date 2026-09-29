@@ -8,8 +8,10 @@ import {
   calculateUnitPrice,
   formatPrice,
 } from "./pricing.js";
-import { lockScroll, unlockScroll } from "../utils/scroll-lock.js";
-import { waitForTransitionEnd } from "../utils/motion.js";
+import { announce } from "../utils/announce.js";
+import { initDialog, openDialog } from "../utils/dialog.js";
+import { addItem } from "./cart-store.js";
+import { playAddToCartAnimation } from "./cart-animation.js";
 
 /**
  * @typedef {import("../types.js").Plant} Plant
@@ -52,9 +54,9 @@ const createModalController = () => {
   const { dialog, elements } = createPlantModal();
 
   document.body.append(dialog);
+  initDialog(dialog);
 
   let state = /** @type {ModalState | null} */ (null);
-  let pressStartedOnBackdrop = false;
 
   const render = () => {
     if (!state) return;
@@ -103,23 +105,17 @@ const createModalController = () => {
   elements.quantityInput.addEventListener("change", render);
 
   elements.close.addEventListener("click", () => dialog.close());
-  elements.submit.addEventListener("click", () => dialog.close());
+  elements.submit.addEventListener("click", () => {
+    if (!state) return;
 
-  dialog.addEventListener("pointerdown", (event) => {
-    pressStartedOnBackdrop = event.target === dialog;
-  });
+    const { plant, size, pot, quantity } = state;
+    const origin = elements.submit.getBoundingClientRect();
 
-  dialog.addEventListener("pointerup", (event) => {
-    if (pressStartedOnBackdrop && event.target === dialog) {
-      dialog.close();
-    }
+    addItem({ plantId: plant.id, size, pot, quantity });
+    announce(`${plant.name} added to your collection`);
 
-    pressStartedOnBackdrop = false;
-  });
-
-  dialog.addEventListener("close", async () => {
-    await waitForTransitionEnd(dialog);
-    unlockScroll();
+    dialog.close();
+    playAddToCartAnimation(origin, plant.image);
   });
 
   return (plant) => {
@@ -128,8 +124,7 @@ const createModalController = () => {
     fillPlantDetails(elements, plant);
     render();
 
-    lockScroll();
-    dialog.showModal();
+    openDialog(dialog);
   };
 };
 

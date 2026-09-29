@@ -12,6 +12,7 @@
 @use "components/nav";
 @use "components/logo";
 @use "components/theme-toggle";
+@use "components/cart-button";
 @use "components/burger-button";
 @use "components/footer-nav";
 @use "components/social-links";
@@ -23,6 +24,7 @@
 @use "components/category-nav";
 @use "components/overlay";
 @use "components/plant-modal";
+@use "components/cart-drawer";
 
 @use "sections/hero";
 @use "sections/featured-plants";

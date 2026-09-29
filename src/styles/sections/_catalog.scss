@@ -44,20 +44,6 @@
   color: var(--color-text-muted);
 }
 
-.catalog-results__clear {
-  font-size: var(--font-size-small);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--color-primary);
-  text-decoration: underline;
-  text-underline-offset: 0.25em;
-
-  &:hover,
-  &:focus-visible {
-    color: var(--color-text);
-  }
-}
-
 .catalog-message {
   display: grid;
   justify-items: start;

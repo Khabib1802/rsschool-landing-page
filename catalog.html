@@ -71,6 +71,25 @@
         <div class="header__actions">
           <button
             type="button"
+            class="cart-button"
+            data-cart-open
+            aria-label="Open collection"
+            aria-haspopup="dialog"
+          >
+            <svg
+              class="cart-button__icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M5 8h14l-1 12H6L5 8Z" />
+              <path d="M9 8V7a3 3 0 0 1 6 0v1" />
+            </svg>
+
+            <span class="cart-button__count" data-cart-count hidden>0</span>
+          </button>
+
+          <button
+            type="button"
             class="theme-toggle"
             data-theme-toggle
             aria-label="Toggle theme"
@@ -158,7 +177,7 @@
 
             <button
               type="button"
-              class="catalog-results__clear"
+              class="link-button"
               data-clear-filters
               hidden
             >

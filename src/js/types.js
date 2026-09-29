@@ -30,4 +30,12 @@
  * @property {PlantPricing} pricing
  */
 
+/**
+ * @typedef {Object} CartItem
+ * @property {string} plantId
+ * @property {string} size
+ * @property {string} pot
+ * @property {number} quantity
+ */
+
 export {};

@@ -123,7 +123,7 @@ const createChoice = ({ key, value, label }) => {
 
 export const createPlantModal = () => {
   const close = createElement("button", {
-    className: "plant-modal__close",
+    className: "close-button plant-modal__close",
     text: "×",
     attrs: { type: "button", "aria-label": "Close plant details" },
   });

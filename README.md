@@ -37,7 +37,7 @@ public/
 src/
   js/
     components/         DOM builders for cards and modal
-    modules/            Feature modules (catalog, modal, slider, theme, ...)
+    modules/            Feature modules (catalog, modal, cart, slider, theme, ...)
     utils/              Shared helpers
   styles/
     abstracts/          Variables and breakpoints

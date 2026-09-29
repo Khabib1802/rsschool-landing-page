@@ -78,27 +78,6 @@ $two-column-query: "(min-width: #{breakpoints.$breakpoint-tablet + 1px}) and (mi
   z-index: 1;
   top: var(--space-12);
   right: var(--space-12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: var(--border-subtle);
-  border-radius: 50%;
-  background-color: var(--color-surface);
-  color: var(--color-text);
-  font-size: 1.5rem;
-  line-height: 1;
-  transition:
-    background-color var(--transition-fast),
-    color var(--transition-fast),
-    border-color var(--transition-fast);
-
-  &:hover,
-  &:focus-visible {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-  }
 }
 
 .plant-modal__image-wrap {
